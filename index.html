@@ -87,7 +87,7 @@
     <input type="text" id="productCode" placeholder="Ví dụ: N365">
     <button onclick="searchProduct()">Tìm</button>
 
-    <div id="result">Sai Mã</div>
+    <div id="result">Nhập Mã</div>
 
     <script>
         let productData = [];
@@ -118,7 +118,7 @@
             const results = productData.filter(product => product.parentCode.toLowerCase() === productCode);
 
             if (results.length === 0) {
-                resultDiv.innerHTML = 'Không Có Số Lượng';
+                resultDiv.innerHTML = 'Sai Mã';
             } else {
                 const availableSizes = results
                     .filter(product => product.stock > 0)
