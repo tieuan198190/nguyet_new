@@ -87,7 +87,7 @@
     <input type="text" id="productCode" placeholder="Ví dụ: N365">
     <button onclick="searchProduct()">Tìm</button>
 
-    <div id="result">Không Có Số Lượng</div>
+    <div id="result">Sai Mã</div>
 
     <script>
         let productData = [];
@@ -128,7 +128,7 @@
                 if (availableSizes) {
                     resultDiv.innerHTML = availableSizes;
                 } else {
-                    resultDiv.innerHTML = 'Không có sản phẩm khả dụng cho size này';
+                    resultDiv.innerHTML = 'Hết hàng';
                 }
             }
         }
