@@ -78,6 +78,11 @@
             text-align: center;
         }
 
+        .product-image img {
+            width: 100%; /* Default to full width of container */
+            height: auto;
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.2rem;
@@ -101,12 +106,13 @@
                 font-size: 1rem;
             }
 
-            .product-row {
-                flex-direction: column;
+            .location-info {
+                text-align: right; /* Ensure location stays right-aligned on mobile */
             }
 
-            .location-info {
-                text-align: left;
+            .product-image img {
+                width: 100vw; /* Full viewport width for mobile */
+                height: auto;
             }
         }
     </style>
@@ -210,7 +216,7 @@
                 if (imageUrl) {
                     resultDiv.innerHTML += `
                         <div class="product-image">
-                            <img src="${imageUrl}" alt="${productCode}" width="200px" />
+                            <img src="${imageUrl}" alt="${productCode}" />
                         </div>`;
                 }
             }
