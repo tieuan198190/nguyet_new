@@ -115,7 +115,7 @@
                 .then(data => {
                     const lines = data.split('\n');
                     lines.forEach(line => {
-                        const [parentCode, shelf, row] = line.split(',');
+                        const [parentCode, shelf, row] = line.split(', ');
                         productLocations.push({ parentCode, shelf, row });
                     });
                     console.log('Product location data loaded:', productLocations);
