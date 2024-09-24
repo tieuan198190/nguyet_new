@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Product Availability and Location</title>
+    <title>Search Product Availability</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,9 +91,9 @@
 
     <script>
         let productData = [];
-        let productLocations = [];
+        let locationData = [];
 
-        // Function to load data from the product data file
+        // Function to load data from the product data text file
         function loadProductData() {
             fetch('product_data.txt')
                 .then(response => response.text())
@@ -108,19 +108,19 @@
                 .catch(error => console.error('Error loading product data:', error));
         }
 
-        // Function to load data from the product location file
-        function loadProductLocations() {
+        // Function to load data from the location data text file
+        function loadLocationData() {
             fetch('location.txt')
                 .then(response => response.text())
                 .then(data => {
                     const lines = data.split('\n');
                     lines.forEach(line => {
                         const [parentCode, shelf, row] = line.split(',');
-                        productLocations.push({ parentCode, shelf, row });
+                        locationData.push({ parentCode, shelf, row });
                     });
-                    console.log('Product location data loaded:', productLocations);
+                    console.log('Location data loaded:', locationData);
                 })
-                .catch(error => console.error('Error loading product location data:', error));
+                .catch(error => console.error('Error loading location data:', error));
         }
 
         function searchProduct() {
@@ -131,36 +131,35 @@
             resultDiv.innerHTML = '';
 
             // Filter the product data based on the entered parent code (case-insensitive search)
-            const productResults = productData.filter(product => product.parentCode.toLowerCase() === productCode);
+            const results = productData.filter(product => product.parentCode.toLowerCase() === productCode);
 
-            if (productResults.length === 0) {
+            if (results.length === 0) {
                 resultDiv.innerHTML = 'Sai Mã';
             } else {
-                const availableSizes = productResults
+                const availableSizes = results
                     .filter(product => product.stock > 0)
                     .map(product => `${product.stock} - ${product.size}`)
                     .join('<br>'); // Each size will appear on a new line
 
-                const locationResult = productLocations.find(location => location.parentCode.toLowerCase() === productCode);
+                const location = locationData.find(loc => loc.parentCode.toLowerCase() === productCode);
+
+                let locationInfo = 'Không có vị trí';
+                if (location) {
+                    locationInfo = `Kệ: ${location.shelf}, Hàng: ${location.row}`;
+                }
 
                 if (availableSizes) {
-                    let resultText = `<strong>Sizes Available:</strong><br>${availableSizes}`;
-                    if (locationResult) {
-                        resultText += `<br><br><strong>Location:</strong> ${locationResult.shelf}, ${locationResult.row}`;
-                    } else {
-                        resultText += '<br><br>Location: Not Available';
-                    }
-                    resultDiv.innerHTML = resultText;
+                    resultDiv.innerHTML = `<strong>Sản phẩm có sẵn:</strong><br>${availableSizes}<br><br><strong>Vị trí:</strong> ${locationInfo}`;
                 } else {
                     resultDiv.innerHTML = 'Hết hàng';
                 }
             }
         }
 
-        // Load both product data and product location when the page loads
+        // Load the product data and location data when the page loads
         window.onload = function() {
             loadProductData();
-            loadProductLocations();
+            loadLocationData();
         };
     </script>
 
