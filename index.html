@@ -128,7 +128,7 @@
                     const lines = data.split('\n');
                     lines.forEach(line => {
                         const [parentCode, size, stock] = line.split(',');
-                        productData.push({ parentCode, size, stock: parseInt(stock, 10) });
+                        productData.push({ parentCode: parentCode.trim(), size: size.trim(), stock: parseInt(stock, 10) });
                     });
                     console.log('Product data loaded:', productData);
                 })
@@ -143,7 +143,7 @@
                     const lines = data.split('\n');
                     lines.forEach(line => {
                         const [parentCode, shelf, row] = line.split(',');
-                        locationData.push({ parentCode, shelf, row });
+                        locationData.push({ parentCode: parentCode.trim(), shelf: shelf.trim(), row: row.trim() });
                     });
                     console.log('Location data loaded:', locationData);
                 })
@@ -169,6 +169,8 @@
             let locationInfo = 'Không có vị trí';
             if (location) {
                 locationInfo = `${location.shelf.toUpperCase()}, ${location.row.toUpperCase()}`;
+            } else {
+                console.log(`No location found for product code: ${productCode}`); // Log missing location data
             }
 
             // Filter the product data based on the entered parent code (case-insensitive search)
@@ -178,13 +180,15 @@
                 resultDiv.innerHTML = '<div>Sai Mã</div>';
             } else {
                 // Display available sizes and stock with the location once on the right
-                results.forEach((product, index) => {
+                let displayedLocation = false;
+                results.forEach(product => {
                     if (product.stock > 0) {
                         resultDiv.innerHTML += `
                             <div class="product-row">
                                 <div class="size-info">${product.stock} - ${product.size}</div>
-                                ${index === 0 ? `<div class="location-info">${locationInfo}</div>` : ''}
+                                ${!displayedLocation ? `<div class="location-info">${locationInfo}</div>` : ''}
                             </div>`;
+                        displayedLocation = true; // Ensure location is only displayed once
                     }
                 });
 
