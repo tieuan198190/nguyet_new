@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Product Availability</title>
+    <title>Search Product Availability and Location</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,8 +91,9 @@
 
     <script>
         let productData = [];
+        let productLocations = [];
 
-        // Function to load data from the text file
+        // Function to load data from the product data file
         function loadProductData() {
             fetch('product_data.txt')
                 .then(response => response.text())
@@ -107,6 +108,21 @@
                 .catch(error => console.error('Error loading product data:', error));
         }
 
+        // Function to load data from the product location file
+        function loadProductLocations() {
+            fetch('product_location.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const lines = data.split('\n');
+                    lines.forEach(line => {
+                        const [parentCode, shelf, row] = line.split(',');
+                        productLocations.push({ parentCode, shelf, row });
+                    });
+                    console.log('Product location data loaded:', productLocations);
+                })
+                .catch(error => console.error('Error loading product location data:', error));
+        }
+
         function searchProduct() {
             const productCode = document.getElementById('productCode').value.trim().toLowerCase();
             const resultDiv = document.getElementById('result');
@@ -115,26 +131,37 @@
             resultDiv.innerHTML = '';
 
             // Filter the product data based on the entered parent code (case-insensitive search)
-            const results = productData.filter(product => product.parentCode.toLowerCase() === productCode);
+            const productResults = productData.filter(product => product.parentCode.toLowerCase() === productCode);
 
-            if (results.length === 0) {
+            if (productResults.length === 0) {
                 resultDiv.innerHTML = 'Sai Mã';
             } else {
-                const availableSizes = results
+                const availableSizes = productResults
                     .filter(product => product.stock > 0)
                     .map(product => `${product.stock} - ${product.size}`)
                     .join('<br>'); // Each size will appear on a new line
 
+                const locationResult = productLocations.find(location => location.parentCode.toLowerCase() === productCode);
+
                 if (availableSizes) {
-                    resultDiv.innerHTML = availableSizes;
+                    let resultText = `<strong>Sizes Available:</strong><br>${availableSizes}`;
+                    if (locationResult) {
+                        resultText += `<br><br><strong>Location:</strong> ${locationResult.shelf}, ${locationResult.row}`;
+                    } else {
+                        resultText += '<br><br>Location: Not Available';
+                    }
+                    resultDiv.innerHTML = resultText;
                 } else {
                     resultDiv.innerHTML = 'Hết hàng';
                 }
             }
         }
 
-        // Load the product data when the page loads
-        window.onload = loadProductData;
+        // Load both product data and product location when the page loads
+        window.onload = function() {
+            loadProductData();
+            loadProductLocations();
+        };
     </script>
 
 </body>
