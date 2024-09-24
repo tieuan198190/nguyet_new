@@ -55,19 +55,13 @@
             color: #333;
         }
 
-        .product-row {
-            display: flex;
-            justify-content: space-between;
+        .location-info {
+            font-weight: bold;
             margin-bottom: 10px;
         }
 
         .size-info {
-            width: 60%;
-        }
-
-        .location-info {
-            width: 35%;
-            text-align: right;
+            margin-bottom: 5px;
         }
 
         @media (max-width: 600px) {
@@ -91,14 +85,6 @@
 
             #result {
                 font-size: 1rem;
-            }
-
-            .product-row {
-                flex-direction: column;
-            }
-
-            .location-info {
-                text-align: left;
             }
         }
     </style>
@@ -161,31 +147,35 @@
             // Clear previous results
             resultDiv.innerHTML = '';
 
+            // Find the location data for the entered product code
+            const location = locationData.find(loc => loc.parentCode.toLowerCase() === productCode);
+            let locationInfo = 'Không có vị trí';
+            if (location) {
+                locationInfo = `Kệ: ${location.shelf}, Hàng: ${location.row}`;
+            }
+
+            // Display the location first
+            resultDiv.innerHTML = `<div class="location-info">Vị trí: ${locationInfo}</div>`;
+
             // Filter the product data based on the entered parent code (case-insensitive search)
             const results = productData.filter(product => product.parentCode.toLowerCase() === productCode);
 
             if (results.length === 0) {
-                resultDiv.innerHTML = 'Sai Mã';
+                resultDiv.innerHTML += '<div>Sai Mã</div>';
             } else {
-                const location = locationData.find(loc => loc.parentCode.toLowerCase() === productCode);
+                // Display available sizes and stock below the location
+                results.forEach(product => {
+                    if (product.stock > 0) {
+                        resultDiv.innerHTML += `
+                            <div class="size-info">
+                                ${product.stock} - ${product.size}
+                            </div>`;
+                    }
+                });
 
-                let locationInfo = 'Không có vị trí';
-                if (location) {
-                    locationInfo = `Kệ: ${location.shelf}, Hàng: ${location.row}`;
-                }
-
-                if (results.length > 0) {
-                    results.forEach(product => {
-                        if (product.stock > 0) {
-                            resultDiv.innerHTML += `
-                                <div class="product-row">
-                                    <div class="size-info">${product.stock} - ${product.size}</div>
-                                    <div class="location-info">${locationInfo}</div>
-                                </div>`;
-                        }
-                    });
-                } else {
-                    resultDiv.innerHTML = 'Hết hàng';
+                // If no available sizes, display 'Hết hàng'
+                if (!results.some(product => product.stock > 0)) {
+                    resultDiv.innerHTML += '<div>Hết hàng</div>';
                 }
             }
         }
