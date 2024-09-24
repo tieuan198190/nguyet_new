@@ -55,6 +55,21 @@
             color: #333;
         }
 
+        .product-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .size-info {
+            width: 60%;
+        }
+
+        .location-info {
+            width: 35%;
+            text-align: right;
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.2rem;
@@ -76,6 +91,14 @@
 
             #result {
                 font-size: 1rem;
+            }
+
+            .product-row {
+                flex-direction: column;
+            }
+
+            .location-info {
+                text-align: left;
             }
         }
     </style>
@@ -144,11 +167,6 @@
             if (results.length === 0) {
                 resultDiv.innerHTML = 'Sai Mã';
             } else {
-                const availableSizes = results
-                    .filter(product => product.stock > 0)
-                    .map(product => `${product.stock} - ${product.size}`)
-                    .join('<br>'); // Each size will appear on a new line
-
                 const location = locationData.find(loc => loc.parentCode.toLowerCase() === productCode);
 
                 let locationInfo = 'Không có vị trí';
@@ -156,8 +174,16 @@
                     locationInfo = `Kệ: ${location.shelf}, Hàng: ${location.row}`;
                 }
 
-                if (availableSizes) {
-                    resultDiv.innerHTML = `<strong>Sản phẩm có sẵn:</strong><br>${availableSizes}<br><br><strong>Vị trí:</strong> ${locationInfo}`;
+                if (results.length > 0) {
+                    results.forEach(product => {
+                        if (product.stock > 0) {
+                            resultDiv.innerHTML += `
+                                <div class="product-row">
+                                    <div class="size-info">${product.stock} - ${product.size}</div>
+                                    <div class="location-info">${locationInfo}</div>
+                                </div>`;
+                        }
+                    });
                 } else {
                     resultDiv.innerHTML = 'Hết hàng';
                 }
