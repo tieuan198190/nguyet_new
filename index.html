@@ -79,7 +79,7 @@
         }
 
         .product-image img {
-            width: 100%; /* Default to full width of container */
+            width: 95%; /* Default to full width of container */
             height: auto;
         }
 
@@ -119,7 +119,7 @@
 </head>
 <body>
 
-    <h1>Tìm mã</h1>
+    <h1>Tìm mã team kho</h1>
     <label for="productCode">Nhập Mã:</label>
     <input type="text" id="productCode" placeholder="Ví dụ: N365">
     <button onclick="searchProduct()">Tìm</button>
@@ -190,25 +190,31 @@
             } else {
                 let displayedLocation = false;
                 let imageUrl = null;
+                let hasStock = false;
 
                 results.forEach(product => {
+                    if (!displayedLocation) {
+                        resultDiv.innerHTML += `<div class="location-info">${locationInfo}</div>`;
+                        displayedLocation = true;
+                    }
+
+                    // Check if any size has stock
                     if (product.stock > 0) {
                         resultDiv.innerHTML += `
                             <div class="product-row">
                                 <div class="size-info">${product.stock} - ${product.size}</div>
-                                ${!displayedLocation ? `<div class="location-info">${locationInfo}</div>` : ''}
                             </div>`;
-                        displayedLocation = true;
-                        
-                        // Store the image URL once for later display
-                        if (!imageUrl && product.imageUrl) {
-                            imageUrl = product.imageUrl;
-                        }
+                        hasStock = true; // Mark that there is stock
+                    }
+
+                    // Store the image URL once for later display
+                    if (!imageUrl && product.imageUrl) {
+                        imageUrl = product.imageUrl;
                     }
                 });
 
-                // If no available sizes, display 'Hết hàng'
-                if (!results.some(product => product.stock > 0)) {
+                // If all products are out of stock, display 'Hết hàng' once
+                if (!hasStock) {
                     resultDiv.innerHTML += '<div>Hết hàng</div>';
                 }
 
