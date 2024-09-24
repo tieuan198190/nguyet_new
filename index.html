@@ -55,13 +55,22 @@
             color: #333;
         }
 
-        .location-info {
-            font-weight: bold;
+        .product-row {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 10px;
         }
 
         .size-info {
-            margin-bottom: 5px;
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .location-info {
+            flex: 1;
+            text-align: right;
+            font-size: 1rem;
+            font-weight: bold;
         }
 
         @media (max-width: 600px) {
@@ -85,6 +94,14 @@
 
             #result {
                 font-size: 1rem;
+            }
+
+            .product-row {
+                flex-direction: column;
+            }
+
+            .location-info {
+                text-align: left;
             }
         }
     </style>
@@ -151,24 +168,22 @@
             const location = locationData.find(loc => loc.parentCode.toLowerCase() === productCode);
             let locationInfo = 'Không có vị trí';
             if (location) {
-                locationInfo = `Kệ: ${location.shelf}, Hàng: ${location.row}`;
+                locationInfo = `${location.shelf.toUpperCase()}, ${location.row.toUpperCase()}`;
             }
-
-            // Display the location once
-            resultDiv.innerHTML = `<div class="location-info">Vị trí: ${locationInfo}</div>`;
 
             // Filter the product data based on the entered parent code (case-insensitive search)
             const results = productData.filter(product => product.parentCode.toLowerCase() === productCode);
 
             if (results.length === 0) {
-                resultDiv.innerHTML += '<div>Sai Mã</div>';
+                resultDiv.innerHTML = '<div>Sai Mã</div>';
             } else {
-                // Display available sizes and stock below the location
-                results.forEach(product => {
+                // Display available sizes and stock with the location once on the right
+                results.forEach((product, index) => {
                     if (product.stock > 0) {
                         resultDiv.innerHTML += `
-                            <div class="size-info">
-                                ${product.stock} - ${product.size}
+                            <div class="product-row">
+                                <div class="size-info">${product.stock} - ${product.size}</div>
+                                ${index === 0 ? `<div class="location-info">${locationInfo}</div>` : ''}
                             </div>`;
                     }
                 });
