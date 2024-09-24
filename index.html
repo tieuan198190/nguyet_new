@@ -59,15 +59,17 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
         }
 
         .size-info {
             flex: 1;
+            min-width: 100px; /* Minimum width for size info */
             font-size: 1rem;
         }
 
         .location-info {
-            flex: 0 0 150px; /* Fixed width for the location info */
+            flex: 0 0 150px; /* Fixed width for location info */
             text-align: right;
             font-size: 1rem;
             font-weight: bold;
@@ -97,11 +99,12 @@
             }
 
             .product-row {
-                flex-direction: column;
+                flex-direction: column; /* Stack elements vertically on small screens */
+                align-items: flex-start; /* Align items to the start */
             }
 
             .location-info {
-                text-align: left;
+                text-align: left; /* Align location info to the left on small screens */
             }
         }
     </style>
