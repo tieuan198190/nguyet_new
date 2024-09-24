@@ -92,10 +92,11 @@
     <script>
         let productData = [];
         let locationData = [];
+        let dataLoaded = false;
 
         // Function to load data from the product data text file
         function loadProductData() {
-            fetch('product_data.txt')
+            return fetch('product_data.txt')
                 .then(response => response.text())
                 .then(data => {
                     const lines = data.split('\n');
@@ -110,7 +111,7 @@
 
         // Function to load data from the location data text file
         function loadLocationData() {
-            fetch('location.txt')
+            return fetch('location.txt')
                 .then(response => response.text())
                 .then(data => {
                     const lines = data.split('\n');
@@ -123,7 +124,14 @@
                 .catch(error => console.error('Error loading location data:', error));
         }
 
+        // Function to search product
         function searchProduct() {
+            // Check if the data has been loaded before proceeding
+            if (!dataLoaded) {
+                alert("Data is still loading. Please wait.");
+                return;
+            }
+
             const productCode = document.getElementById('productCode').value.trim().toLowerCase();
             const resultDiv = document.getElementById('result');
 
@@ -156,10 +164,17 @@
             }
         }
 
-        // Load the product data and location data when the page loads
+        // Load the product data and location data when the page loads, using Promise.all to wait for both
         window.onload = function() {
-            loadProductData();
-            loadLocationData();
+            Promise.all([loadProductData(), loadLocationData()])
+                .then(() => {
+                    console.log('Both data files have been loaded');
+                    dataLoaded = true; // Set the flag to true when both fetches complete
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    alert('There was an error loading the data files. Please try again later.');
+                });
         };
     </script>
 
