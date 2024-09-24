@@ -110,7 +110,7 @@
 
         // Function to load data from the product location file
         function loadProductLocations() {
-            fetch('product_location.txt')
+            fetch('location.txt')
                 .then(response => response.text())
                 .then(data => {
                     const lines = data.split('\n');
