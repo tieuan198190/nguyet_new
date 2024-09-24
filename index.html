@@ -59,20 +59,23 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
-            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
         }
 
         .size-info {
             flex: 1;
-            min-width: 100px; /* Minimum width for size info */
             font-size: 1rem;
         }
 
         .location-info {
-            flex: 0 0 150px; /* Fixed width for location info */
+            flex: 1;
             text-align: right;
             font-size: 1rem;
             font-weight: bold;
+        }
+
+        .product-image {
+            margin-top: 10px;
+            text-align: center;
         }
 
         @media (max-width: 600px) {
@@ -99,12 +102,11 @@
             }
 
             .product-row {
-                flex-direction: row; /* Ensure row layout on small screens */
-                align-items: center;
+                flex-direction: column;
             }
 
             .location-info {
-                text-align: right; /* Ensure location info stays on the right */
+                text-align: left;
             }
         }
     </style>
@@ -123,27 +125,29 @@
         let locationData = [];
         let dataLoaded = false;
 
+        // Function to load data from the product data text file
         function loadProductData() {
             return fetch('product_data.txt')
                 .then(response => response.text())
                 .then(data => {
                     const lines = data.split('\n');
                     lines.forEach(line => {
-                        const [parentCode, size, stock] = line.split(',');
-                        productData.push({ parentCode: parentCode.trim(), size: size.trim(), stock: parseInt(stock, 10) });
+                        const [parentCode, size, stock, imageUrl] = line.split(',').map(item => item.trim());
+                        productData.push({ parentCode: parentCode.trim(), size: size.trim(), stock: parseInt(stock, 10), imageUrl: imageUrl ? imageUrl.trim() : null });
                     });
                     console.log('Product data loaded:', productData);
                 })
                 .catch(error => console.error('Error loading product data:', error));
         }
 
+        // Function to load data from the location data text file
         function loadLocationData() {
             return fetch('location.txt')
                 .then(response => response.text())
                 .then(data => {
                     const lines = data.split('\n');
                     lines.forEach(line => {
-                        const [parentCode, shelf, row] = line.split(',');
+                        const [parentCode, shelf, row] = line.split(',').map(item => item.trim());
                         locationData.push({ parentCode: parentCode.trim(), shelf: shelf.trim(), row: row.trim() });
                     });
                     console.log('Location data loaded:', locationData);
@@ -151,7 +155,9 @@
                 .catch(error => console.error('Error loading location data:', error));
         }
 
+        // Function to search product
         function searchProduct() {
+            // Check if the data has been loaded before proceeding
             if (!dataLoaded) {
                 alert("Data is still loading. Please wait.");
                 return;
@@ -159,20 +165,26 @@
 
             const productCode = document.getElementById('productCode').value.trim().toLowerCase();
             const resultDiv = document.getElementById('result');
+
+            // Clear previous results
             resultDiv.innerHTML = '';
 
+            // Find the location data for the entered product code
             const location = locationData.find(loc => loc.parentCode.toLowerCase() === productCode);
             let locationInfo = 'Không có vị trí';
             if (location) {
                 locationInfo = `${location.shelf.toUpperCase()}, ${location.row.toUpperCase()}`;
             }
 
+            // Filter the product data based on the entered parent code (case-insensitive search)
             const results = productData.filter(product => product.parentCode.toLowerCase() === productCode);
 
             if (results.length === 0) {
                 resultDiv.innerHTML = '<div>Sai Mã</div>';
             } else {
                 let displayedLocation = false;
+                let imageUrl = null;
+
                 results.forEach(product => {
                     if (product.stock > 0) {
                         resultDiv.innerHTML += `
@@ -181,20 +193,35 @@
                                 ${!displayedLocation ? `<div class="location-info">${locationInfo}</div>` : ''}
                             </div>`;
                         displayedLocation = true;
+                        
+                        // Store the image URL once for later display
+                        if (!imageUrl && product.imageUrl) {
+                            imageUrl = product.imageUrl;
+                        }
                     }
                 });
 
+                // If no available sizes, display 'Hết hàng'
                 if (!results.some(product => product.stock > 0)) {
                     resultDiv.innerHTML += '<div>Hết hàng</div>';
+                }
+
+                // Display the image at the very end
+                if (imageUrl) {
+                    resultDiv.innerHTML += `
+                        <div class="product-image">
+                            <img src="${imageUrl}" alt="${productCode}" width="200px" />
+                        </div>`;
                 }
             }
         }
 
+        // Load the product data and location data when the page loads, using Promise.all to wait for both
         window.onload = function() {
             Promise.all([loadProductData(), loadLocationData()])
                 .then(() => {
                     console.log('Both data files have been loaded');
-                    dataLoaded = true;
+                    dataLoaded = true; // Set the flag to true when both fetches complete
                 })
                 .catch(error => {
                     console.error('Error loading data:', error);
