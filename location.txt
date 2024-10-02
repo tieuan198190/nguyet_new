@@ -676,3 +676,11 @@ T556,kệ 2,hàng 2
 T579,kệ 2,hàng 2
 T578,kệ 2,hàng 2
 N159,kệ 2,hàng 2
+N210,kệ 5,hàng 8
+N218,kệ 6,hàng 4
+N284,kệ 5,hàng 6
+N269,kệ 6,hàng 2
+N268,kệ 6,hàng 2
+N261,kệ 5,hàng 8
+N220,kệ 5,hàng 8
+N80,kệ 5,hàng 1
