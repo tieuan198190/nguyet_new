@@ -85,8 +85,8 @@ N260,kệ 5,hàng 8
 T692,kệ 1,hàng 1
 N285,kệ 5,hàng 7
 N194,kệ 6,hàng 3
-N389,lầu 1,dãy 1
-N297,lầu 1,dãy 1
+N389,kệ 6,hàng 6
+N297,kệ 6,hàng 6
 N205,kệ 5,hàng 7
 N249,kệ 6,hàng 3
 N111,kệ 6,hàng 3
@@ -95,16 +95,16 @@ N180,kệ 6,hàng 3
 N378,lầu 1,dãy 1
 N254,kệ 5,hàng 7
 N301,kệ 6,hàng 3
-N200,lầu 1,dãy 1
-N216,lầu 1,dãy 1
+N200,kệ 6,hàng 2
+N216,kệ 6,hàng 2
 N173,kệ 6,hàng 3
-N352,lầu 1,dãy 1
+N352,kệ 6,hàng 3
 N11,kệ 5,hàng 6
 N237,kệ 5,hàng 6
 N354,lầu 1,dãy 1
 N251,kệ 6,hàng 3
 N273,kệ 5,hàng 6
-N106,lầu 1,dãy 1
+N106,kệ 6,hàng 2
 N359,kệ 6,hàng 3
 N263,kệ 5,hàng 6
 N234,kệ 5,hàng 6
@@ -430,7 +430,7 @@ T642,kệ 4,hàng 5
 N44,lầu 2,dãy 1
 T95,kệ 2,hàng 9
 T606,kệ 4,hàng 5
-A1,kệ 6,hàng trệt
+A1,kệ 6,hàng 5
 T96,kệ 2,hàng 9
 T639,kệ 4,hàng 5
 T98,kệ 2,hàng 9
@@ -496,7 +496,7 @@ T265,kệ 2,hàng 7
 T266,kệ 2,hàng 7
 T487,kệ 4,hàng 4
 T270,kệ 2,hàng 7
-N281,lầu 1,dãy 1
+N281,kệ 6,hàng 2
 N110,kệ 6,hàng 10
 T492,kệ 4,hàng 4
 N81,kệ 6,hàng 10
@@ -721,3 +721,12 @@ T790,kệ 2,hàng 1
 T602,kệ 3,hàng 3
 T607,kệ 3,hàng 3
 T604,kệ 3,hàng 3
+N317,kệ 6,hàng 6
+N309,kệ 6,hàng 6
+N313,kệ 6,hàng 6
+N310,kệ 5,hàng 4
+N311,kệ 5,hàng 4
+N318,kệ 6,hàng 2
+N305,kệ 6,hàng 3
+
+
