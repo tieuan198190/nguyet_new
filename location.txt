@@ -728,5 +728,29 @@ N310,kệ 5,hàng 4
 N311,kệ 5,hàng 4
 N318,kệ 6,hàng 2
 N305,kệ 6,hàng 3
-
+N426,Kệ 8,Hàng 5
+N425,Kệ 8,Hàng 5
+N420,Kệ 8,Hàng 5
+N424,Kệ 8,Hàng 5
+N405,Kệ 8,Hàng 5
+N409,Kệ 8,Hàng 5
+N406,Kệ 8,Hàng 5
+N403,Kệ 8,Hàng 5
+N423,Kệ 8,Hàng 4
+N408,Kệ 8,Hàng 4
+N402,Kệ 8,Hàng 4
+N428,Kệ 8,Hàng 4
+N404,Kệ 8,Hàng 3
+N416,Kệ 8,Hàng 3
+N419,Kệ 8,Hàng 3
+N418,Kệ 8,Hàng 3
+N431,Kệ 8,Hàng 3
+N417,Kệ 8,Hàng 2
+N415,Kệ 8,Hàng 2
+N422,Kệ 8,Hàng 2
+N407,Kệ 8,Hàng 2
+N410,Kệ 8,Hàng 2
+N427,Kệ 8,Hàng 2
+N430,Kệ 8,Hàng 2
+N421,Kệ 8,Hàng 1
 
