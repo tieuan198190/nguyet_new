@@ -14,6 +14,17 @@ N140,kệ 7,hàng 1
 N279,kệ 5,hàng 10
 N190,kệ 7,hàng 1
 N369,kệ 6,hàng 2
+N351,kệ 1,hàng 4
+N211,kệ 1,hàng 3
+N390,kệ 1,hàng 3
+N215,kệ 1,hàng 3
+N274,kệ 1,hàng 3
+N350,kệ 1,hàng 3
+N385,kệ 1,hàng 2
+N268,kệ 1,hàng 2
+N308,kệ 1,hàng 2
+N386,kệ 1,hàng 2
+N262,kệ 1,hàng 2
 T788,kệ 5,hàng 10
 T743,kệ 5,hàng 10
 N160,kệ 7,hàng 2
