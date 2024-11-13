@@ -753,4 +753,15 @@ N410,Kệ 8,Hàng 2
 N427,Kệ 8,Hàng 2
 N430,Kệ 8,Hàng 2
 N421,Kệ 8,Hàng 1
+N351, kệ 9, hàng 4
+N211, kệ 9, hàng 3
+N390, kệ 9, hàng 3
+N215, kệ 9, hàng 3
+N274, kệ 9, hàng 3
+N350, kệ 9, hàng 3
+N385, kệ 9, hàng 2
+N268, kệ 9, hàng 2
+N308, kệ 9, hàng 2
+N386, kệ 9, hàng 2
+N262, kệ 9, hàng 2
 
