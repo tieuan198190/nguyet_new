@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Product Availability</title>
     <style>
         body {
@@ -175,10 +174,12 @@
             // Clear previous results
             resultDiv.innerHTML = '';
 
-            // Find the location data for the entered product code
-            const location = locationData.find(loc => loc.parentCode.toLowerCase() === productCode);
+            // Find all location data for the entered product code
+            const locations = locationData.filter(loc => loc.parentCode.toLowerCase() === productCode);
             let locationInfo = 'Không có vị trí';
-            if (location) {
+            if (locations.length > 0) {
+                // Get the last occurrence
+                const location = locations[locations.length - 1];
                 locationInfo = `${location.shelf.toUpperCase()}, ${location.row.toUpperCase()}`;
             }
 
@@ -222,7 +223,7 @@
                 if (imageUrl) {
                     resultDiv.innerHTML += `
                         <div class="product-image">
-                            <img src="${imageUrl}" alt="${productCode}" />
+                            <img src="${imageUrl}" alt="Image of product ${productCode}" />
                         </div>`;
                 }
             }
