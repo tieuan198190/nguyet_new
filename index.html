@@ -152,10 +152,14 @@
                 .then(response => response.text())
                 .then(data => {
                     const lines = data.split('\n');
+                    const locationMap = new Map(); // Use a Map to store only the last location for each product
                     lines.forEach(line => {
                         const [parentCode, shelf, row] = line.split(',').map(item => item.trim());
-                        locationData.push({ parentCode: parentCode.trim(), shelf: shelf.trim(), row: row.trim() });
+                        // update new Location map
+                        locationMap.set(parentCode.trim(), { parentCode: parentCode.trim(), shelf: shelf.trim(), row: row.trim() });
+                        // locationData.push({ parentCode: parentCode.trim(), shelf: shelf.trim(), row: row.trim() });
                     });
+                    locationDAta = Array.from(locationMap.values());
                     console.log('Location data loaded:', locationData);
                 })
                 .catch(error => console.error('Error loading location data:', error));
