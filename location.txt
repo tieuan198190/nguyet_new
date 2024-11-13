@@ -181,7 +181,7 @@ T167,kệ 4,hàng 8
 T152,kệ 4,hàng 8
 N302,kệ 5,hàng 4
 T153,kệ 4,hàng 8
-N204,kệ 6,hàng 4
+N204,kệ 6,hàng 10
 T47,kệ 1,hàng 7
 T241,kệ 1,hàng 7
 T161,kệ 4,hàng 8
@@ -753,4 +753,5 @@ N268, kệ 9, hàng 2
 N308, kệ 9, hàng 2
 N386, kệ 9, hàng 2
 N262, kệ 9, hàng 2
+N204,kệ 6,hàng 4
 
