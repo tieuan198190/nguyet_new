@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Product Availability</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure proper mobile scaling -->
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0; /* Remove default margin */
+            margin: 10px;
             padding: 10px;
-            min-height: 100vh; /* Ensure the body fills the viewport height */
-            /* Removed max-width to allow full width on mobile devices */
+            max-width: 600px;
+            margin: auto;
         }
 
         h1 {
@@ -79,11 +79,10 @@
         }
 
         .product-image img {
-            width: 100%; /* Make the image take full width of its container */
+            width: 95%; /* Default to full width of container */
             height: auto;
         }
 
-        /* Optional: Adjust font sizes for smaller screens */
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.2rem;
@@ -108,7 +107,12 @@
             }
 
             .location-info {
-                text-align: right;
+                text-align: right; /* Ensure location stays right-aligned on mobile */
+            }
+
+            .product-image img {
+                width: 100vw; /* Full viewport width for mobile */
+                height: auto;
             }
         }
     </style>
