@@ -721,7 +721,7 @@ T790,kệ 2,hàng 1
 T602,kệ 3,hàng 3
 T607,kệ 3,hàng 3
 T604,kệ 3,hàng 3
-N317,kệ 6,hàng 6
+N317,kệ 5,hàng 6
 N309,kệ 6,hàng 6
 N313,kệ 6,hàng 6
 N310,kệ 5,hàng 4
