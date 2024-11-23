@@ -4,254 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Product Availability</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 10px;
-            padding: 10px;
-            max-width: 600px;
-            margin: auto;
-        }
-
-        h1 {
-            font-size: 1.5rem;
-            text-align: center;
-        }
-
-        label {
-            font-weight: bold;
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            font-size: 1rem;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 1.1rem;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        #result {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .product-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .size-info {
-            flex: 1;
-            font-size: 1rem;
-        }
-
-        .location-info {
-            flex: 1;
-            text-align: right;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .product-image {
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .product-image img {
-            width: 95%; /* Default to full width of container */
-            height: auto;
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.2rem;
-            }
-
-            label {
-                font-size: 1rem;
-            }
-
-            button {
-                padding: 10px;
-                font-size: 1rem;
-            }
-
-            input {
-                padding: 8px;
-                font-size: 1rem;
-            }
-
-            #result {
-                font-size: 1rem;
-            }
-
-            .location-info {
-                text-align: right; /* Ensure location stays right-aligned on mobile */
-            }
-
-            .product-image img {
-                width: 100vw; /* Full viewport width for mobile */
-                height: auto;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <!-- Logo thay thế tiêu đề -->
+        <img src="comap_logo.jpg" alt="THÔNG TIN SẢN PHẨM" class="logo">
 
-    <h1>Tìm mã team kho</h1>
-    <label for="productCode">Nhập Mã:</label>
-    <input type="text" id="productCode" placeholder="Ví dụ: N365">
-    <button onclick="searchProduct()">Tìm</button>
+        <!-- Nhãn và ô nhập mã -->
+        <div class="input-container">
+            <input type="text" id="productCode" placeholder="Ví dụ: N474">
+        </div>
 
-    <div id="result">Nhập Mã</div>
+        <!-- Nút Tìm -->
+        <button class="primary-button" onclick="searchProduct()">Tìm</button>
 
-    <script>
-        let productData = [];
-        let locationData = [];
-        let dataLoaded = false;
-
-        // Function to load data from the product data text file
-        function loadProductData() {
-            return fetch('product_data.txt')
-                .then(response => response.text())
-                .then(data => {
-                    const lines = data.split('\n');
-                    lines.forEach(line => {
-                        const [parentCode, size, stock, imageUrl] = line.split(',').map(item => item.trim());
-                        productData.push({
-                            parentCode: parentCode.trim(),
-                            size: size.trim(),
-                            stock: parseInt(stock, 10),
-                            imageUrl: imageUrl ? imageUrl.trim() : null
-                        });
-                    });
-                    console.log('Product data loaded:', productData);
-                })
-                .catch(error => console.error('Error loading product data:', error));
-        }
-
-        // Function to load data from the location data text file
-        function loadLocationData() {
-            return fetch('location.txt')
-                .then(response => response.text())
-                .then(data => {
-                    const lines = data.split('\n');
-                    lines.forEach(line => {
-                        const [parentCode, shelf, row] = line.split(',').map(item => item.trim());
-                        locationData.push({
-                            parentCode: parentCode.trim(),
-                            shelf: shelf.trim(),
-                            row: row.trim()
-                        });
-                    });
-                    console.log('Location data loaded:', locationData);
-                })
-                .catch(error => console.error('Error loading location data:', error));
-        }
-
-        // Function to search product
-        function searchProduct() {
-            // Check if the data has been loaded before proceeding
-            if (!dataLoaded) {
-                alert("Data is still loading. Please wait.");
-                return;
-            }
-
-            const productCode = document.getElementById('productCode').value.trim().toLowerCase();
-            const resultDiv = document.getElementById('result');
-
-            // Clear previous results
-            resultDiv.innerHTML = '';
-
-            // Find all location data for the entered product code
-            const locations = locationData.filter(loc => loc.parentCode.toLowerCase() === productCode);
-            let locationInfo = 'Không có vị trí';
-            if (locations.length > 0) {
-                // Get the last occurrence
-                const location = locations[locations.length - 1];
-                locationInfo = `${location.shelf.toUpperCase()}, ${location.row.toUpperCase()}`;
-            }
-
-            // Filter the product data based on the entered parent code (case-insensitive search)
-            const results = productData.filter(product => product.parentCode.toLowerCase() === productCode);
-
-            if (results.length === 0) {
-                resultDiv.innerHTML = '<div>Sai Mã</div>';
-            } else {
-                let displayedLocation = false;
-                let imageUrl = null;
-                let hasStock = false;
-
-                results.forEach(product => {
-                    if (!displayedLocation) {
-                        resultDiv.innerHTML += `<div class="location-info">${locationInfo}</div>`;
-                        displayedLocation = true;
-                    }
-
-                    // Check if any size has stock
-                    if (product.stock > 0) {
-                        resultDiv.innerHTML += `
-                            <div class="product-row">
-                                <div class="size-info">${product.stock} - ${product.size}</div>
-                            </div>`;
-                        hasStock = true; // Mark that there is stock
-                    }
-
-                    // Store the image URL once for later display
-                    if (!imageUrl && product.imageUrl) {
-                        imageUrl = product.imageUrl;
-                    }
-                });
-
-                // If all products are out of stock, display 'Hết hàng' once
-                if (!hasStock) {
-                    resultDiv.innerHTML += '<div>Hết hàng</div>';
-                }
-
-                // Display the image at the very end
-                if (imageUrl) {
-                    resultDiv.innerHTML += `
-                        <div class="product-image">
-                            <img src="${imageUrl}" alt="Image of product ${productCode}" />
-                        </div>`;
-                }
-            }
-        }
-
-        // Load the product data and location data when the page loads, using Promise.all to wait for both
-        window.onload = function() {
-            Promise.all([loadProductData(), loadLocationData()])
-                .then(() => {
-                    console.log('Both data files have been loaded');
-                    dataLoaded = true; // Set the flag to true when both fetches complete
-                })
-                .catch(error => {
-                    console.error('Error loading data:', error);
-                    alert('There was an error loading the data files. Please try again later.');
-                });
-        };
-    </script>
-
+        <!-- Phần hiển thị kết quả -->
+        <div id="result">
+            <!-- Box 1: Location -->
+            <div class="location-box">
+                <h3>VỊ TRÍ</h3>
+                <p id="location-info">Không có vị trí</p>
+            </div>
+            <!-- Box 2: Sizes -->
+            <div class="size-box">
+                <h3>TỒN KHO</h3>
+                <ul id="size-list">
+                    <!-- Danh sách size sẽ được hiển thị tại đây -->
+                </ul>
+            </div>
+            <!-- Box 3: Product Image -->
+            <div class="image-box">
+                <div id="product-image">
+                    <p>Không có hình ảnh</p>
+                </div>
+            </div>
+        </div>        
+    <script src="app.js"></script>
 </body>
 </html>
