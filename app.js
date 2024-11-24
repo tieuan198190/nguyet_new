@@ -51,7 +51,6 @@ function searchProduct() {
     const locationBox = document.querySelector('.location-box');
     const sizeBox = document.querySelector('.size-box');
     const imageBox = document.querySelector('.image-box');
-    const resultDiv = document.getElementById('result'); // Khu vực kết quả
 
     // Mặc định ẩn tất cả các box
     locationBox.style.display = 'none';
