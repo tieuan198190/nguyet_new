@@ -56,22 +56,27 @@ body, html {
 /* Thông tin sản phẩm */
 .info-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Khoảng cách giữa các box */
+    align-items: flex-start; /* Canh trên để nội dung cùng hàng */
     width: 100%;
-    padding: 20px 20px;
-    font-size: 1rem;
+    padding: 20px; /* Khoảng cách padding giữa nội dung và container */
+    font-size: 1rem; /* Đảm bảo kích thước chữ đồng nhất */
+    gap: 20px; /* Tạo khoảng cách giữa hai box */
+    flex-wrap: nowrap; /* Không cho phép xuống dòng */
+    box-sizing: border-box; /* Đảm bảo padding và border không vượt kích thước container */
 }
 
 .sizes, .location {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    flex: 1; /* Hai box chia đều không gian */
+    min-width: 0; /* Ngăn tình trạng box giãn vượt mức */
+    max-width: 50%; /* Mỗi box không chiếm quá 50% container */
+    word-wrap: break-word; /* Tự động xuống dòng nếu nội dung quá dài */
 }
 
 .sizes p, .location p {
     margin: 0;
     font-size: 1rem;
-    color: #333;
+    color: #121212;
 }
 
 .sizes p b, .location p b {
@@ -244,4 +249,33 @@ button, input, textarea {
     border-color: #007BFF; /* Màu viền khi focus */
     box-shadow: 0 0 10px rgba(0, 123, 255, 0.2); /* Hiệu ứng đổ bóng */
     background-color: #fff; /* Màu nền khi focus */
+}
+.sizes, .location {
+    flex: 1; /* Hai box chia đều không gian */
+    min-width: 0; /* Tránh box giãn vượt kích thước */
+    max-width: 50%; /* Giới hạn mỗi box chiếm tối đa 50% */
+    text-align: left; /* Căn trái nội dung */
+    vertical-align: top; /* Canh trên cho nội dung */
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between; /* Giãn đều hai box */
+    align-items: flex-start; /* Căn trên để nội dung thẳng hàng */
+    gap: 20px; /* Tạo khoảng cách giữa các box */
+    width: 100%; /* Đảm bảo container chiếm toàn bộ chiều ngang */
+}
+
+.sizes {
+    text-align: left; /* Nội dung căn trái */
+    flex: 1; /* Box sizes chiếm 1 phần */
+}
+
+.location {
+    text-align: right; /* Nội dung căn phải */
+    flex: 1; /* Box location chiếm 1 phần */
+}
+.sizes, .location {
+    max-width: 50%; /* Mỗi box không chiếm quá 50% chiều ngang */
+    min-width: 0; /* Tránh tình trạng box tự giãn */
 }
