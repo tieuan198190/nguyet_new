@@ -38,7 +38,6 @@ function loadLocationData() {
         })
         .catch(error => console.error('Error loading location data:', error));
 }
-
 function searchProduct() {
     if (!dataLoaded) {
         alert("Data is still loading. Please wait.");
@@ -47,77 +46,51 @@ function searchProduct() {
 
     const productCode = document.getElementById('productCode').value.trim().toLowerCase();
 
-    // Lấy các box
-    const locationBox = document.querySelector('.location-box');
-    const sizeBox = document.querySelector('.size-box');
-    const imageBox = document.querySelector('.image-box');
-
-    // Mặc định ẩn tất cả các box
-    locationBox.style.display = 'none';
-    sizeBox.style.display = 'none';
-    imageBox.style.display = 'none';
-
-    // Nếu không nhập mã sản phẩm, hiển thị thông báo
-    if (!productCode) {
-        resultDiv.innerHTML = '<p class="error-message">Vui lòng nhập mã sản phẩm!</p>';
-        return;
-    }
-
     const locationDiv = document.getElementById('location-info');
     const sizeList = document.getElementById('size-list');
-    const productImageDiv = document.getElementById('product-image');
+    const productImage = document.getElementById('product-image');
 
     sizeList.innerHTML = ''; // Xóa nội dung cũ
     locationDiv.innerHTML = ''; // Xóa nội dung vị trí cũ
-    productImageDiv.innerHTML = ''; // Xóa nội dung hình ảnh cũ
+    productImage.style.display = 'none'; // Ẩn ảnh mặc định
 
     const locations = locationData.filter(loc => loc.parentCode.toLowerCase() === productCode);
     const results = productData.filter(product => product.parentCode.toLowerCase() === productCode);
 
     // Kiểm tra mã sản phẩm
     if (results.length === 0) {
-        // Hiển thị thông báo sai mã
-        resultDiv.innerHTML = '<p class="error-message">SAI MÃ SẢN PHẨM!</p>';
+        alert("SAI MÃ SẢN PHẨM!");
         return;
     }
 
-    // Xử lý hiển thị Location Box
+    // Hiển thị thông tin vị trí
     if (locations.length > 0) {
         const location = locations[locations.length - 1];
         locationDiv.innerHTML = `${location.shelf.toUpperCase()}, ${location.row.toUpperCase()}`;
-        locationBox.style.display = 'block'; // Hiển thị box Location
     } else {
         locationDiv.innerHTML = 'Không có vị trí';
-        locationBox.style.display = 'block'; // Luôn hiển thị box Location
     }
 
-    // Xử lý hiển thị Sizes Box
-    if (results.length > 0) {
-        let hasStock = false;
-        results.forEach(product => {
-            if (product.stock > 0) {
-                sizeList.innerHTML += `<li>${product.stock} - ${product.size}</li>`;
-                hasStock = true;
-            }
-        });
-
-        if (hasStock) {
-            sizeBox.style.display = 'block'; // Hiển thị box Sizes nếu có hàng
-        } else {
-            sizeList.innerHTML = '<li>Hết hàng</li>';
-            sizeBox.style.display = 'block';
+    // Hiển thị thông tin size
+    let hasStock = false; // Biến kiểm tra nếu có sản phẩm còn hàng
+    results.forEach(product => {
+        if (product.stock > 0) { // Chỉ hiển thị size nếu stock > 0
+            sizeList.innerHTML += `<p><b>${product.stock}</b> ${product.size}</p>`;
+            hasStock = true; // Có ít nhất một sản phẩm còn hàng
         }
+    });
+
+    if (!hasStock) {
+        sizeList.innerHTML = '<p>Hết hàng</p>'; // Hiển thị thông báo hết hàng nếu không có sản phẩm nào còn hàng
     }
 
-    // Xử lý hiển thị Product Image Box
+    // Hiển thị hình ảnh sản phẩm
     const imageUrl = results.find(product => product.imageUrl)?.imageUrl || null;
     if (imageUrl) {
-        productImageDiv.innerHTML = `<img src="${imageUrl}" alt="Image of product ${productCode}" />`;
-        imageBox.style.display = 'block'; // Hiển thị box Product Image
+        productImage.src = imageUrl;
+        productImage.style.display = 'block'; // Hiển thị ảnh
     }
 }
-
-
 
 
 window.onload = function() {

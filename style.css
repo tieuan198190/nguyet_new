@@ -6,245 +6,207 @@
 }
 
 /* Toàn bộ trang */
-body {
-    display: flex;
-    justify-content: center; /* Căn giữa theo chiều ngang */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    height: 100vh; /* Chiều cao bằng chiều cao màn hình */
-    background-color: #EAF6FF; /* Màu nền trang */
-    margin: 0; /* Loại bỏ khoảng trắng mặc định */
-}
-
-
-.container {
-    background-color: #ffffff; /* Màu nền trắng cho container */
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-
-    /* Kích thước linh hoạt */
-    width: 90%; /* Chiếm 90% chiều rộng của màn hình */
-    max-width: 400px; /* Giới hạn chiều rộng tối đa */
-    margin: 0 auto; /* Căn giữa theo chiều ngang */
-}
-
-/* Logo */
-.logo {
+body, html {
+    height: 100%;
     width: 100%;
-    max-width: 200px; /* Logo không vượt quá 200px */
-    margin: 0 auto 20px; /* Căn giữa và thêm khoảng cách dưới */
-    display: block;
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Nhãn và ô nhập */
-.input-container {
-    margin-bottom: 20px;
-    text-align: left;
+/* Container chính */
+.result-page {
+    width: 90%;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
-label {
+/* Container cho hình ảnh */
+.image-container {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    height: 70vh; /* Chiều cao là 50% chiều cao màn hình */
+    position: relative; /* Để nội dung khác hiển thị bên dưới */
+    overflow: hidden; /* Cắt phần vượt quá container */
+    border-radius: 10px; /* Bo góc container */
+}
+
+/* Hình ảnh sản phẩm */
+.product-image {
+    width: 100%; /* Chiều rộng 100% */
+    height: 100%; /* Chiều cao phủ kín container */
+    object-fit: cover; /* Giữ đúng tỷ lệ, cắt phần thừa */
+    object-position: top; /* Hiển thị phần trên của hình ảnh, cắt phần dưới */
+    display: block; /* Hiển thị hình ảnh */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+
+/* Thông tin sản phẩm */
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 20px;
+    font-size: 1rem;
+}
+
+.sizes, .location {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sizes p, .location p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.sizes p b, .location p b {
     font-size: 1rem;
     font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
 }
 
-input {
+/* Thanh tìm kiếm */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     width: 100%;
-    padding: 10px;
+}
+
+.search-container input {
+    flex: 4;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 30px 30px 30px 30px;
     font-size: 1rem;
-    border: 2px solid #ccc;
-    border-radius: 30px;
-    text-align: center;
     outline: none;
+    color: #333;
+    background-color: #f9f9f9;
+    text-align: left;
+    padding-left: 20px;
     transition: all 0.3s ease;
 }
 
-input:focus {
-    border-color: #4CAF50; /* Đổi màu viền khi chọn */
+.search-container input::placeholder {
+    color: #aaa;
 }
 
-/* Nút tìm kiếm */
-.primary-button {
-    background-color: #a1a1a1;
-    color: white;
+.search-container input:focus {
+    border-color: #007BFF;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+}
+
+/* Nút Tìm kiếm */
+.search-container .search-button {
+    flex: 1;
+    padding: 15px 20px;
+    font-size: 1rem;
     border: none;
-    border-radius: 30px;
-    padding: 12px;
-    font-size: 1rem;
-    width: 50%;
+    border-radius: 30px 30px 30px 30px;
+    background: linear-gradient(to right, #007bff, #0056b3);
+    color: #fff;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
-.primary-button:hover {
-    background-color: #45a049;
+.search-container .search-button:hover {
+    background: linear-gradient(to right, #0056b3, #007bff);
+    transform: scale(1.05);
 }
 
-#result {
-    margin-top: 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
-    word-wrap: break-word; /* Bẻ dòng nếu nội dung quá dài */
-    max-width: 100%; /* Giới hạn chiều rộng theo container */
-    overflow: hidden; /* Ẩn phần tràn */
-    text-align: left; /* Căn lề trái hoặc thay đổi theo ý muốn */
-}
-@media (max-width: 600px) {
-    .container {
-        width: 95%; /* Chiếm 95% màn hình trên thiết bị nhỏ */
-        padding: 15px; /* Giảm khoảng cách padding */
+/* Responsive - Màn hình nhỏ hơn */
+@media (max-width: 768px) {
+    .welcome-page {
+        width: 95%; /* Tăng chiều rộng để tận dụng tối đa không gian */
+        gap: 3vh; /* Giảm khoảng cách giữa các phần tử */
+    }
+
+    .logo {
+        width: 70vw; /* Tăng logo cho phù hợp với màn hình nhỏ */
+    }
+
+    .search-container input, .search-container .search-button {
+        padding: 0.8rem; /* Giảm padding trên các thiết bị nhỏ */
+        font-size: 0.9rem; /* Giảm font chữ */
     }
 }
 
-@media (min-width: 768px) {
-    .container {
-        max-width: 500px; /* Tăng chiều rộng tối đa trên màn hình lớn hơn */
-        padding: 25px; /* Tăng khoảng cách padding */
+/* Responsive - Màn hình rất nhỏ (ví dụ điện thoại cỡ nhỏ) */
+@media (max-width: 480px) {
+    .logo {
+        width: 80vw; /* Logo chiếm 80% chiều rộng màn hình */
+    }
+
+    .search-container input {
+        font-size: 0.8rem;
+    }
+
+    .search-container .search-button {
+        font-size: 0.8rem;
     }
 }
-
-#product-image img {
-    width: 100%; /* Hình ảnh phủ toàn bộ chiều rộng box */
-    height: 100%; /* Hình ảnh phủ toàn bộ chiều cao box */
-    object-fit: cover; /* Cắt hình ảnh để vừa khít box */
-    border-radius: 10px; /* Bo góc ảnh */
-}
-/* Box chứa hình ảnh sản phẩm */
-.image-box {
-    flex: 1; /* Chiếm đều không gian với các box khác */
-    min-width: 150px; /* Chiều rộng tối thiểu */
-    max-width: 300px; /* Chiều rộng tối đa */
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('codecpro.ttf') format('truetype'); /* Đường dẫn đến file */
+    font-weight: normal;
+    font-style: normal;
 }
 
-.image-box h3 {
-    font-size: 1.2rem;
+/* Áp dụng font cho toàn bộ trang */
+body {
+    font-family: 'Codec Pro', sans-serif;
+}
+
+/* Font cho các thành phần khác */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Codec Pro', sans-serif;
     font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
 }
 
-#product-image img {
-    max-width: 100%; /* Đảm bảo hình ảnh không vượt quá box */
-    height: auto; /* Duy trì tỷ lệ gốc */
-    border-radius: 10px; /* Bo góc hình ảnh */
-    margin-top: 10px;
+button, input, textarea {
+    font-family: 'Codec Pro', sans-serif;
 }
 
-#product-image p {
-    font-size: 1rem;
-    color: #555;
-}
-/* Kết quả */
-#result {
-    display: flex; /* Hiển thị các box theo hàng ngang */
-    flex-wrap: wrap; /* Đảm bảo box xuống dòng khi không đủ không gian */
-    gap: 20px; /* Khoảng cách giữa các box */
-    margin-top: 20px;
-    justify-content: center; /* Căn giữa các box */
-}
-
-/* Box chứa location */
-.location-box, .size-box {
-    flex: 1; /* Để hai box chiếm đều không gian */
-    min-width: 150px; /* Chiều rộng tối thiểu cho box */
-    max-width: 300px; /* Chiều rộng tối đa cho box */
-    padding: 15px;
-    border: 1px solid #ccc; /* Viền nhẹ */
-    border-radius: 10px; /* Bo góc box */
-    background-color: #f9f9f9; /* Màu nền nhạt */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+/* Container chính */
+.welcome-page {
+    width: 90%; /* Đảm bảo chiều rộng phù hợp trên mọi màn hình */
+    max-width: 600px; /* Giới hạn tối đa cho các màn hình lớn */
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Đặt cấu trúc dọc */
+    gap: 5vh; /* Khoảng cách giữa logo và thanh tìm kiếm dựa trên chiều cao viewport */
 }
 
-/* Tiêu đề box */
-.location-box h3, .size-box h3 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
+/* Logo Section */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
-/* Danh sách size */
-#size-list {
-    list-style: none; /* Xóa dấu chấm đầu dòng */
-    padding: 0;
-    margin: 0;
-    text-align: left; /* Căn lề trái */
-}
-
-#size-list li {
-    margin-bottom: 5px; /* Khoảng cách giữa các dòng size */
-    font-size: 1rem;
-    color: #555;
-}
-.location-box,
-.size-box,
-.image-box {
-    display: none; /* Ẩn mặc định */
-}
-.location-box #location-info {
-    font-size: 1rem;
-    color: #555; /* Màu xám nhẹ */
-}
-.error-message {
-    color: rgb(56, 56, 56);
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
-}
-.location-box {
-    background-color: rgb(234, 234, 234); /* Màu nền vàng nhạt */
-    color: #333; /* Màu chữ */
-    border: 1px solid #ffffff; /* Viền cùng tông */
-    border-radius: 10px; /* Bo góc */
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-}
-
-.size-box {
-    background-color: #e3e3e3; /* Màu nền xanh nhạt */
-    color: #333; /* Màu chữ */
-    border: 1px solid #ffffff; /* Viền cùng tông */
-    border-radius: 10px; /* Bo góc */
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-}
-.image-box {
-    width: 400px; /* Chiều ngang cố định */
-    max-width: 100%; /* Đảm bảo không vượt quá container */
-    margin: 0 auto; /* Căn giữa box hình ảnh */
-    padding: 10px; /* Khoảng cách bên trong box */
-    border: 1px solid #ccc; /* Viền box */
-    border-radius: 10px; /* Bo góc box */
-    background-color: #f9f9f9; /* Màu nền box */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng */
-    text-align: center; /* Căn giữa nội dung trong box */
-}
-
-#product-image img {
-    width: 100%; /* Chiều ngang của ảnh luôn bằng chiều ngang box */
-    height: auto; /* Chiều cao tự động điều chỉnh theo tỷ lệ */
-    border-radius: 10px; /* Bo góc ảnh */
-    display: block; /* Xóa khoảng trắng bên dưới hình ảnh */
-}
-html, body {
-    height: auto; /* Để chiều cao tự động */
-    overflow-y: auto; /* Cho phép cuộn theo chiều dọc */
-    margin: 0; /* Xóa khoảng cách mặc định */
-    padding: 0; /* Xóa padding mặc định */
-}
-button {
-    position: relative; /* Đảm bảo nút không bị cố định */
+.logo {
+    width: 50vw; /* Logo chiếm 50% chiều rộng viewport */
+    max-width: 300px; /* Giới hạn tối đa kích thước logo */
+    height: auto;
+    object-fit: contain; /* Giữ nguyên tỷ lệ logo */
 }
