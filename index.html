@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Search Product</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -17,7 +17,7 @@
         <!-- Thanh tìm kiếm -->
         <div class="search-container">
             <input type="text" id="welcomeProductCode" placeholder="Search">
-            <button class="search-button" onclick="goToResultPage()">Tìm</button>
+            <button class="search-button" onclick="goToResultPage()">Tìm Kiếm</button>
         </div>
     </div>
 
@@ -44,7 +44,7 @@
         <!-- Thanh tìm kiếm lại -->
         <div class="search-container">
             <input type="text" id="productCode" placeholder="Search">
-            <button class="search-button" onclick="searchProduct()">Tìm</button>
+            <button class="search-button" onclick="searchProduct()">Tìm Kiếm</button>
         </div>
     </div>
 
@@ -53,14 +53,9 @@
         function goToResultPage() {
             const welcomeProductCode = document.getElementById('welcomeProductCode').value.trim();
             if (welcomeProductCode) {
-                // Copy mã sản phẩm sang trang kết quả
                 document.getElementById('productCode').value = welcomeProductCode;
-
-                // Ẩn trang chào mừng, hiển thị trang kết quả
                 document.getElementById('welcome-page').style.display = 'none';
                 document.getElementById('result-page').style.display = 'block';
-
-                // Tự động tìm kiếm sản phẩm
                 searchProduct();
             } else {
                 alert("Vui lòng nhập mã sản phẩm!");
