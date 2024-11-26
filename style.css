@@ -210,3 +210,38 @@ button, input, textarea {
     height: auto;
     object-fit: contain; /* Giữ nguyên tỷ lệ logo */
 }
+.search-container .search-button {
+    font-size: 16px; /* Đồng bộ kích thước chữ */
+    padding: 15px; /* Padding đều */
+    height: 50px; /* Khớp với chiều cao input */
+    border: none;
+    border-radius: 30px; /* Bo góc */
+    background: linear-gradient(to right, #007bff, #0056b3); /* Màu gradient */
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-container .search-button:hover {
+    background: linear-gradient(to right, #0056b3, #007bff);
+    transform: scale(1.05); /* Hiệu ứng khi hover */
+}
+
+.search-container input {
+    font-size: 16px; /* Đảm bảo kích thước font chữ tối thiểu */
+    padding: 15px; /* Đặt padding đều */
+    height: 50px; /* Giữ chiều cao cố định */
+    border: 1px solid #ccc; /* Đường viền */
+    border-radius: 30px; /* Bo góc */
+    color: #333; /* Màu chữ */
+    background-color: #f9f9f9; /* Màu nền */
+    outline: none; /* Tắt viền khi nhấn */
+    transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+    border-color: #007BFF; /* Màu viền khi focus */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.2); /* Hiệu ứng đổ bóng */
+    background-color: #fff; /* Màu nền khi focus */
+}
