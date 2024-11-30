@@ -732,3 +732,13 @@ T62, Kệ 1, Hàng 10
 T54, Kệ 1, Hàng 10  
 T53, Kệ 1, Hàng 10  
 T51, Kệ 1, Hàng 10
+N511, lầu 1, dãy 1
+N512, lầu 1, dãy 1
+N509, lầu 1, dãy 2
+N510, lầu 1, dãy 2
+N507, kệ 9, hàng 4
+N508, kệ 10, hàng 4
+N502, kệ 10, hàng 4
+N506, kệ 10, hàng 3
+N503, kệ 9, hàng 5
+N504, kệ 9, hàng 5
