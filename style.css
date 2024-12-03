@@ -18,7 +18,7 @@ body, html {
 
 /* Container chính */
 .result-page {
-    width: 90%;
+    width: 100%;
     max-width: 800px;
     background-color: #ffffff;
     border-radius: 20px;
