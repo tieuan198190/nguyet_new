@@ -57,7 +57,7 @@ function loadLocationData() {
 // Tìm kiếm sản phẩm
 function searchProduct() {
     if (!dataLoaded) {
-        alert("Data is still loading. Please wait.");
+        alert("Đang chạy. Đợi 5-10 giây đi!");
         return;
     }
 
