@@ -16,7 +16,7 @@
 
         <!-- Thanh tìm kiếm -->
         <div class="search-container">
-            <input type="text" id="welcomeProductCode" placeholder="Search">
+            <input type="text" id="welcomeProductCode" placeholder="Nhập mã sản phẩm">
             <button class="search-button" onclick="goToResultPage()">Tìm</button>
         </div>
     </div>
@@ -35,14 +35,18 @@
                     <!-- Danh sách size sẽ được hiển thị tại đây -->
                 </ul>
             </div>
+            <div class="price">
+                <p id="product-price">Không có giá</p>
+            </div>
             <div class="location">
-                <p> <span id="location-info">Không có vị trí</span></p>
+                <p id="location-info">Không có vị trí</p>
             </div>
         </div>
+        
 
         <!-- Thanh tìm kiếm lại -->
         <div class="search-container">
-            <input type="text" id="productCode" placeholder="Search">
+            <input type="text" id="productCode" placeholder="Nhập mã sản phẩm khác">
             <button class="search-button" onclick="searchProduct()">Tìm</button>
         </div>
     </div>
