@@ -72,7 +72,7 @@ function loadLocationData() {
 // Tìm kiếm sản phẩm
 function searchProduct() {
     if (!dataLoaded) {
-        alert("Dữ liệu chưa được tải. Vui lòng đợi.");
+        alert("Đang tải dữ liệu. Đợi 5-10s đi!");
         return;
     }
 
@@ -93,7 +93,7 @@ function searchProduct() {
 
     // Hiển thị kết quả
     if (results.length === 0) {
-        alert("Không tìm thấy sản phẩm!");
+        alert("Sai Mã Sản Phẩm!");
         return;
     }
 
