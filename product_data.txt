@@ -6181,11 +6181,11 @@ G999,XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231114_zilyT6bDtK.j
 G999,XXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231114_zilyT6bDtK.jpeg
 G999,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231114_zilyT6bDtK.jpeg
 G999,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231114_zilyT6bDtK.jpeg
-HD1.1,M,992,nan,nan
-HD1.1,L,995,nan,nan
-HD1.1,XL,984,nan,nan
+HD1.1,M,991,nan,nan
+HD1.1,L,993,nan,nan
+HD1.1,XL,982,nan,nan
 HD1.1,XXL,988,nan,nan
-HD1.1,XXXL,999,nan,nan
+HD1.1,XXXL,998,nan,nan
 HD1.2,M,0,nan,nan
 HD1.2,L,0,nan,nan
 HD1.2,XL,0,nan,nan
@@ -8058,7 +8058,7 @@ N382,XXXL,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241008_CTTGfobKU0
 N382,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241008_CTTGfobKU0.jpeg
 N383,M,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241008_n1o8NsLPuX.jpeg
 N383,L,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241008_n1o8NsLPuX.jpeg
-N383,XL,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241008_n1o8NsLPuX.jpeg
+N383,XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241008_n1o8NsLPuX.jpeg
 N383,XXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241008_n1o8NsLPuX.jpeg
 N383,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241008_n1o8NsLPuX.jpeg
 N383,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241008_n1o8NsLPuX.jpeg
@@ -8732,7 +8732,7 @@ N488,M,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241126_KCk6wxFO0l.jp
 N488,L,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241126_KCk6wxFO0l.jpeg
 N488,XL,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241126_KCk6wxFO0l.jpeg
 N488,XXL,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241126_KCk6wxFO0l.jpeg
-N488,XXXL,1,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241126_KCk6wxFO0l.jpeg
+N488,XXXL,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241126_KCk6wxFO0l.jpeg
 N488,4XL,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241126_KCk6wxFO0l.jpeg
 N489,M,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241126_aMsS0FlQPe.jpeg
 N489,L,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241126_aMsS0FlQPe.jpeg
@@ -8958,7 +8958,7 @@ N523,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241204_I0Z3XBHtFF
 N523,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241204_I0Z3XBHtFF.jpeg
 N524,M,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241204_LYELSirJG5.jpeg
 N524,L,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241204_LYELSirJG5.jpeg
-N524,XL,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241204_LYELSirJG5.jpeg
+N524,XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241204_LYELSirJG5.jpeg
 N524,XXL,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241204_LYELSirJG5.jpeg
 N524,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241204_LYELSirJG5.jpeg
 N524,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241204_LYELSirJG5.jpeg
@@ -9257,7 +9257,7 @@ N57,XXL,0,490000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20240520_LiMGsIpHN9.j
 N57,XXXL,0,490000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20240520_LiMGsIpHN9.jpeg
 N57,4XL,0,490000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20240520_LiMGsIpHN9.jpeg
 N570,M,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241214_NHgsgvPdaH.jpeg
-N570,L,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241214_NHgsgvPdaH.jpeg
+N570,L,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241214_NHgsgvPdaH.jpeg
 N570,XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241214_NHgsgvPdaH.jpeg
 N570,XXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241214_NHgsgvPdaH.jpeg
 N570,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241214_NHgsgvPdaH.jpeg
@@ -9284,7 +9284,7 @@ N574,M,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241216_v157Dj3qyO.jp
 N574,L,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241216_v157Dj3qyO.jpeg
 N574,XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241216_v157Dj3qyO.jpeg
 N574,XXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241216_v157Dj3qyO.jpeg
-N574,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241216_v157Dj3qyO.jpeg
+N574,XXXL,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241216_v157Dj3qyO.jpeg
 N574,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241216_v157Dj3qyO.jpeg
 N575,M,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241216_Ebo1UX46XX.jpeg
 N575,L,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241216_Ebo1UX46XX.jpeg
@@ -9307,7 +9307,7 @@ N577,4XL,0,585000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241218_qEBh6ZBi8N.
 N578,M,2,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241218_z5mkbzcdDe.jpeg
 N578,L,5,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241218_z5mkbzcdDe.jpeg
 N578,XL,3,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241218_z5mkbzcdDe.jpeg
-N578,XXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241218_z5mkbzcdDe.jpeg
+N578,XXL,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241218_z5mkbzcdDe.jpeg
 N578,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241218_z5mkbzcdDe.jpeg
 N578,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241218_z5mkbzcdDe.jpeg
 N579,M,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241218_Awyn7ioDbr.jpeg
@@ -9364,15 +9364,15 @@ N586,XL,16,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_U95d6K47Om.
 N586,XXL,6,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_U95d6K47Om.jpeg
 N586,XXXL,3,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_U95d6K47Om.jpeg
 N586,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_U95d6K47Om.jpeg
-N587,M,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_hrvEJ6Vrgh.jpeg
+N587,M,1,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_hrvEJ6Vrgh.jpeg
 N587,L,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_hrvEJ6Vrgh.jpeg
-N587,XL,2,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_hrvEJ6Vrgh.jpeg
+N587,XL,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_hrvEJ6Vrgh.jpeg
 N587,XXL,5,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_hrvEJ6Vrgh.jpeg
 N587,XXXL,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_hrvEJ6Vrgh.jpeg
 N587,4XL,0,499000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_hrvEJ6Vrgh.jpeg
 N588,M,6,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_uXNR4sqrUq.jpeg
 N588,L,9,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_uXNR4sqrUq.jpeg
-N588,XL,8,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_uXNR4sqrUq.jpeg
+N588,XL,7,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_uXNR4sqrUq.jpeg
 N588,XXL,6,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_uXNR4sqrUq.jpeg
 N588,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_uXNR4sqrUq.jpeg
 N588,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_uXNR4sqrUq.jpeg
@@ -9395,7 +9395,7 @@ N590,XXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_kzX73lW9Vl.
 N590,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_kzX73lW9Vl.jpeg
 N590,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_kzX73lW9Vl.jpeg
 N591,M,3,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_1cXjb9k3fN.jpeg
-N591,L,5,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_1cXjb9k3fN.jpeg
+N591,L,4,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_1cXjb9k3fN.jpeg
 N591,XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_1cXjb9k3fN.jpeg
 N591,XXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_1cXjb9k3fN.jpeg
 N591,XXXL,2,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_1cXjb9k3fN.jpeg
@@ -9408,7 +9408,7 @@ N592,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_jPBAxVwJak
 N592,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_jPBAxVwJak.jpeg
 N593,M,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_XeR0ipXskc.jpeg
 N593,L,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_XeR0ipXskc.jpeg
-N593,XL,10,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_XeR0ipXskc.jpeg
+N593,XL,9,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_XeR0ipXskc.jpeg
 N593,XXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_XeR0ipXskc.jpeg
 N593,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_XeR0ipXskc.jpeg
 N593,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_XeR0ipXskc.jpeg
@@ -9418,10 +9418,10 @@ N594,XL,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_aW5ctGqyYb.j
 N594,XXL,5,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_aW5ctGqyYb.jpeg
 N594,XXXL,2,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_aW5ctGqyYb.jpeg
 N594,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_aW5ctGqyYb.jpeg
-N595,M,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_c3cIXi69pk.jpeg
+N595,M,1,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_c3cIXi69pk.jpeg
 N595,L,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_c3cIXi69pk.jpeg
 N595,XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_c3cIXi69pk.jpeg
-N595,XXL,6,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_c3cIXi69pk.jpeg
+N595,XXL,5,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_c3cIXi69pk.jpeg
 N595,XXXL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_c3cIXi69pk.jpeg
 N595,4XL,0,650000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20241219_c3cIXi69pk.jpeg
 N6,M,0,450000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20240506_J6PYUz4s9K.jpeg
@@ -10651,7 +10651,7 @@ T228,XXXL,0,550000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231222_Pl6YT0Ubu1
 T228,4XL,0,550000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231222_Pl6YT0Ubu1.jpeg
 T229,M,0,850000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231222_IaJpc3rKgB.jpeg
 T229,L,0,850000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231222_IaJpc3rKgB.jpeg
-T229,XL,2,850000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231222_IaJpc3rKgB.jpeg
+T229,XL,0,850000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231222_IaJpc3rKgB.jpeg
 T229,XXL,0,850000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231222_IaJpc3rKgB.jpeg
 T229,XXXL,0,850000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231222_IaJpc3rKgB.jpeg
 T229,4XL,0,850000.0,https://pos.nvncdn.com/6b04a4-154423/ps/20231222_IaJpc3rKgB.jpeg
@@ -15192,7 +15192,7 @@ mam2,M,986,nan,nan
 mam2,L,82,nan,nan
 mam2,XL,994,nan,nan
 mam2,XXL,987,nan,nan
-mam2,XXXL,993,nan,nan
+mam2,XXXL,994,nan,nan
 mam2,4XL,0,nan,nan
 mam3,M,0,nan,nan
 mam3,L,0,nan,nan
