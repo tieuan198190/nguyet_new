@@ -3043,3 +3043,13 @@ N716, KỆ 6, HÀNG 7
 N804, KỆ 6, HÀNG 5
 N807, KỆ 6, HÀNG 5
 N808, KỆ 6, HÀNG 5
+N822   , Kệ 8 Hàng 3
+N864   , Kệ 8 Hàng 3
+N823   , Kệ 8 Hàng 1
+N838   , Kệ 8 Hàng 2
+N839   , Kệ 8 Hàng 2
+N814   , Kệ 9 Hàng 4
+N821   , Kệ 11 Hàng 1
+N824   , Kệ 11 Hàng 2
+N876   , Kệ 11 Hàng 4
+N837   , Kệ 12 Hàng 4
