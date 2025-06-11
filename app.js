@@ -39,34 +39,43 @@ function loadProductData() {
 
 // Load dữ liệu vị trí từ file
 function loadLocationData() {
-    const locationFileUrl = "location.txt"; // Đường dẫn file vị trí
+  const locationS3Url = "https://productdata19971998.s3.ap-southeast-1.amazonaws.com/location_new.txt";
+  const urlWithTimestamp = `${locationS3Url}?t=${new Date().getTime()}`;
 
-    return fetch(locationFileUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+  return fetch(urlWithTimestamp)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status} when fetching location data.`);
+      }
+      return response.text();
+    })
+    .then(data => {
+      const lines = data.split('\n');
+      locationData = [];
+      lines.forEach(line => {
+        const parts = line.split(',').map(item => item.trim());
+        if (parts.length >= 3) {
+            const parentCode = parts[0];
+            const shelf = parts[1];
+            const row = parts[2];
+
+            if (parentCode && shelf && row) {
+                locationData.push({
+                parentCode: parentCode,
+                shelf: shelf,
+                row: row
+                });
             }
-            return response.text();
-        })
-        .then(data => {
-            const lines = data.split('\n');
-            locationData = []; // Xóa dữ liệu cũ
-            lines.forEach(line => {
-                const [parentCode, shelf, row] = line.split(',').map(item => item.trim());
-                if (parentCode && shelf && row) {
-                    locationData.push({
-                        parentCode: parentCode,
-                        shelf: shelf,
-                        row: row
-                    });
-                }
-            });
-            console.log('Location data loaded:', locationData);
-        })
-        .catch(error => {
-            console.error('Error loading location data:', error);
-            alert('Không thể tải dữ liệu vị trí. Vui lòng thử lại sau.');
-        });
+        } else if (line.trim() !== "") {
+            console.warn(`Skipping malformed line in location data: "${line}"`);
+        }
+      });
+      console.log('Location data loaded from S3:', locationData);
+    })
+    .catch(error => {
+      console.error('Error loading location data from S3:', error);
+      alert('Không thể tải dữ liệu vị trí từ S3. Vui lòng thử lại sau.');
+    });
 }
 
 // Tìm kiếm sản phẩm
