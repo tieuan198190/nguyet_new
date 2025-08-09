@@ -375,3 +375,164 @@ body, html {
         font-size: 0.9rem;
     }
 }
+/* ===== Flat Design + Large Rounded Corners ===== */
+:root{
+    --r: 20px;            /* bo góc lớn hơn */
+    --line:#e5e7eb;
+    --bg:#f7f8fb;
+    --chip:#ffffff;
+  }
+  
+  /* Sheet bo tròn nhiều, không shadow nặng */
+  .sheet{
+    width:min(100%, 980px);
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    overflow:hidden;
+    box-shadow:none;
+    display:grid;
+    grid-template-rows:auto auto;
+  }
+  
+  /* Ảnh: góc bo tròn trên */
+  .image-container{
+    background:#f2f4f7;
+    display:grid; place-items:center;
+    padding:0;
+    aspect-ratio: 3/4;
+    border-top-left-radius:var(--r);
+    border-top-right-radius:var(--r);
+  }
+  .product-image{
+    width:100%; height:100%;
+    object-fit:contain;
+    border-radius:0; /* ảnh vuông trong khung bo */
+  }
+  
+  /* Info bo tròn dưới */
+  .info-container{
+    padding:18px 16px 14px;
+    border-top:1px solid var(--line);
+    display:grid;
+    grid-template-columns: 1fr auto;
+    gap:10px 14px;
+    border-bottom-left-radius:var(--r);
+    border-bottom-right-radius:var(--r);
+  }
+  
+  /* Size pill bo lớn hơn */
+  .size-list li{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 14px;
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    background:var(--chip);
+  }
+  
+  /* Thanh nhập bo lớn, phẳng */
+  .search-container{
+    width:min(100%, 980px);
+    position:sticky; bottom:0; z-index:10;
+    display:flex; gap:10px; align-items:center;
+    padding:12px 12px calc(12px + env(safe-area-inset-bottom,8px));
+    background:var(--bg);
+    border-radius:var(--r);
+    border:1px solid var(--line);
+  }
+  .search-container input{
+    flex:1;
+    height:48px;
+    border-radius:var(--r);
+    border:1px solid var(--line);
+    padding:0 14px;
+    font-size:1rem;
+  }
+  .search-container button{
+    height:48px;
+    border-radius:var(--r);
+    padding:0 18px;
+    font-weight:700;
+    border:none;
+    background:#2563eb;
+    color:#fff;
+  }
+  /* ===== Size pill gọn gàng, rõ ràng hơn ===== */
+.size-list{
+    grid-column:1 / -1;
+    list-style:none; margin:6px 0 0; padding:0;
+    display:grid; grid-template-columns: repeat(2, minmax(0,1fr));
+    gap:8px;
+  }
+  .size-list li{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 14px;
+    border:1px solid #e6eaf0;
+    border-radius:20px; /* bo góc lớn để đồng bộ flat design */
+    background:#ffffff;
+    font-weight:600;
+    font-size:1rem;
+    color:#0f172a;
+  }
+  .size-list li span:first-child{
+    flex:0 0 auto;       /* size giữ nguyên chiều rộng chữ */
+  }
+  .size-list li span:last-child{
+    flex:0 0 auto;       /* số lượng cố định */
+    min-width: 28px;     /* đảm bảo không rung */
+    text-align:right;
+    color:#2563eb;       /* màu nhấn cho số lượng */
+  }
+  /* ===== Đưa GIÁ cùng hàng với SIZE, không lệch ===== */
+
+/* Sắp lưới theo vùng rõ ràng: sizes | price  ;  dưới là meta */
+.info-container{
+    display:grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "sizes price"
+      "meta  meta";
+    align-items:start;     /* canh đỉnh cho đồng hàng */
+    gap:12px 16px;
+  }
+  
+  /* Sizes chiếm cột trái, 2 cột pill */
+  .size-list{
+    grid-area:sizes;
+    list-style:none; margin:0; padding:0;
+    display:grid; grid-template-columns: repeat(2, minmax(0,1fr));
+    gap:10px;
+  }
+  .size-list li{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 14px;
+    border:1px solid #e6eaf0; border-radius:20px; background:#fff;
+    font-weight:600; color:#0f172a;
+  }
+  .size-list li span:last-child{
+    min-width:28px; text-align:right; color:#2563eb; font-variation-settings:"wght" 700;
+  }
+  
+  /* GIÁ là 1 thẻ đồng phong cách, nằm cột phải */
+  #product-price{
+    grid-area:price;
+    margin:0;
+    padding:12px 16px;
+    border:1px solid #e6eaf0; border-radius:20px; background:#fff;
+    font-size:1.15rem; font-weight:800; color:#0f172a;
+    justify-self:end;   /* bám cạnh phải cột phải */
+    white-space:nowrap; /* không xuống dòng giá */
+  }
+  
+  /* Chất liệu/địa điểm chiếm trọn hàng dưới */
+  #location-info{
+    grid-area:meta; margin:2px 0 0; color:#64748b; font-size:.95rem;
+  }
+  
+  /* MOBILE rất hẹp: cho size 1 cột, giá nằm trên cùng bên phải */
+  @media (max-width: 390px){
+    .size-list{ grid-template-columns:1fr; }
+  }
+  
