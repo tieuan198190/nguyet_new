@@ -1,45 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Search Product</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tìm kiếm sản phẩm</title>
   <link rel="stylesheet" href="style.css">
   <script>
+    // Tự động làm mới trang sau mỗi 10 phút (600000 ms) để cập nhật dữ liệu
     setInterval(() => {
       window.location.reload();
     }, 600000);
   </script>
 </head>
 <body>
-  <div class="welcome-page" id="welcome-page">
-    <div class="logo-container">
-      <img src="comap_logo.jpg" alt="CÔ MẬP FASHION NÈ" class="logo">
-    </div>
-    <div class="search-container">
-      <input type="text" id="welcomeProductCode" placeholder="Nhập mã sản phẩm">
-      <button class="search-button" id="welcomeSearchButton">Tìm</button>
+
+  <div class="container" id="welcome-page-container">
+    <div class="welcome-page">
+      <div class="logo-container">
+        <img src="comap_logo.jpg" alt="CÔ MẬP FASHION NÈ" class="logo">
+      </div>
+      <div class="search-container">
+        <input type="text" id="welcomeProductCode" placeholder="Nhập mã sản phẩm">
+        <button class="search-button" id="welcomeSearchButton">Tìm</button>
+      </div>
     </div>
   </div>
 
-  <div class="result-page" id="result-page" style="display: none;">
-    <div class="image-container">
-      <img src="" alt="Product Image" id="product-image" class="product-image">
-    </div>
-    <div class="info-container">
-      <div class="sizes">
-        <ul id="size-list" class="size-list"></ul>
+  <div class="container" id="result-page-container" style="display: none;">
+    <div class="result-page">
+      <div class="image-container">
+        <img src="comap_logo.jpg" alt="Product Image" id="product-image" class="product-image">
       </div>
-      <div class="price">
-        <p id="product-price">Không có giá</p>
+      <div class="info-container">
+        <div class="result-search-bar">
+          <div class="search-container">
+            <input type="text" id="resultProductCode" placeholder="Nhập mã khác...">
+            <button class="search-button" id="resultSearchButton">Tìm</button>
+          </div>
+        </div>
+        <div class="details-grid">
+            <div class="detail-card">
+              <h3>SIZE & SỐ LƯỢNG</h3>
+              <ul id="size-list"></ul>
+            </div>
+            <div class="detail-card">
+              <h3>GIÁ BÁN</h3>
+              <p id="product-price">N/A</p>
+            </div>
+             <div class="detail-card">
+              <h3>VỊ TRÍ</h3>
+              <p id="product-location">N/A</p>
+            </div>
+        </div>
       </div>
-      <div class="location">
-        <p id="location-info">Không có vị trí</p>
-      </div>
-    </div>
-    <div class="search-container">
-      <input type="text" id="productCode" placeholder="Nhập mã sản phẩm khác">
-      <button class="search-button" id="resultSearchButton">Tìm</button>
     </div>
   </div>
 
