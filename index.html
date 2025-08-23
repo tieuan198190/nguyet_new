@@ -6,7 +6,6 @@
   <title>Tìm kiếm sản phẩm</title>
   <link rel="stylesheet" href="style.css">
   <script>
-    // Tự động làm mới trang sau mỗi 10 phút (600000 ms) để cập nhật dữ liệu
     setInterval(() => {
       window.location.reload();
     }, 600000);
@@ -28,29 +27,23 @@
 
   <div class="container" id="result-page-container" style="display: none;">
     <div class="result-page">
-      <div class="image-container">
-        <img src="comap_logo.jpg" alt="Product Image" id="product-image" class="product-image">
+      <div class="image-background" id="image-background">
+        <img src="comap_logo.jpg" alt="Product Image" id="product-image-desktop" class="product-image-desktop">
       </div>
-      <div class="info-container">
-        <div class="result-search-bar">
-          <div class="search-container">
+
+      <div class="content-overlay">
+        <div class="floating-info-box">
+          
+          <div class="search-container-result">
             <input type="text" id="resultProductCode" placeholder="Nhập mã khác...">
             <button class="search-button" id="resultSearchButton">Tìm</button>
           </div>
-        </div>
-        <div class="details-grid">
-            <div class="detail-card">
-              <h3>SIZE & SỐ LƯỢNG</h3>
-              <ul id="size-list"></ul>
-            </div>
-            <div class="detail-card">
-              <h3>GIÁ BÁN</h3>
-              <p id="product-price">N/A</p>
-            </div>
-             <div class="detail-card">
-              <h3>VỊ TRÍ</h3>
-              <p id="product-location">N/A</p>
-            </div>
+          
+          <p id="product-location">N/A</p>
+          
+          <p id="product-price">N/A</p>
+
+          <ul id="size-list"></ul>
         </div>
       </div>
     </div>
