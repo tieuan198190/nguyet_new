@@ -571,4 +571,79 @@ html, body {
     content: none !important;
   }
 }
+/* ==== FIX: Result page luôn full màn (bỏ max-width 950px) ==== */
+#result-page-container{
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 10 !important;
+  width: 100svw !important;
+  height: 100svh !important;
+  max-width: none !important;     /* << bỏ giới hạn 950px */
+  padding: 24px !important;
+  padding-top: calc(24px + env(safe-area-inset-top)) !important;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom)) !important;
+  background: var(--bg) !important;
+  overflow: hidden !important;
+}
+
+/* Chừa 40% đáy trống, lưới 2 cột luôn nằm ngang */
+#result-page-container .result-page{
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) 32px 360px !important;
+  grid-template-rows: 1fr !important;
+  align-items: center !important;
+  height: calc(100svh - 40svh) !important;  /* 60% trên */
+  width: 100% !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+/* Cột trái: stretch hết cột, không bị bóp/đẩy */
+#result-page-container .image-background{
+  grid-column: 1 / 2 !important;
+  grid-row: 1 !important;
+  min-width: 0 !important;          /* cho phép co giãn đúng */
+  align-self: stretch !important;
+  justify-self: stretch !important;
+  height: 100% !important;
+  border-radius: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  background: rgba(var(--glass-bg), .18) !important;
+  border: 1px solid var(--glass-stroke) !important;
+}
+#result-page-container .image-background::after{ content:none !important; }
+#result-page-container .product-image-desktop{
+  display: block !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  border-radius: 20px !important;
+}
+
+/* Panel phải */
+#result-page-container .content-overlay{
+  all: unset !important;
+  grid-column: 3 / 4 !important;
+  grid-row: 1 !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+#result-page-container .floating-info-box{
+  width: min(100%, 360px) !important;
+  border-radius: 20px !important;
+  background: rgba(255,255,255,.92) !important;
+  border: 1px solid var(--glass-stroke) !important;
+  box-shadow: 0 20px 40px rgba(31,38,135,.18) !important;
+  padding: 16px !important;
+}
+
+/* Không cuộn & không tràn ngang */
+html, body, #result-page-container, .result-page{ 
+  overflow: hidden !important; 
+}
 
