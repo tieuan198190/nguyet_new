@@ -368,3 +368,207 @@ html, body {
   max-height: 100vh;
   max-width: 100vw;
 }
+/* ===== KHÓA VIEWPORT & TẮT CUỘN CHO MOBILE ===== */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden !important;
+  position: fixed;              /* giữ nguyên vị trí */
+  top: 0; left: 0;
+  overscroll-behavior: none;    /* ngăn bounce scroll trên iOS */
+  touch-action: none;           /* ngăn cuộn bằng cử chỉ */
+}
+
+/* Nếu có container chính */
+.container, .result-page {
+  height: 100%;
+  width: 100%;
+  overflow: hidden !important;
+  position: relative;
+}
+
+/* Dành cho Safari iOS: giữ nền không bị dời khi bàn phím mở */
+@supports (-webkit-touch-callout: none) {
+  html, body {
+    position: fixed;
+    overflow: hidden;
+  }
+}
+/* ===== FIXED VIEWPORT: không cuộn, không co khi mở bàn phím ===== */
+html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* iOS: dùng 100svh để tránh vh thay đổi khi bật keyboard */
+:root { --vh: 100svh; }
+
+/* Sân khấu cố định toàn màn hình */
+#stage {
+  position: fixed;
+  inset: 0;
+  height: var(--vh);
+  width: 100vw;
+  padding: 24px;                      /* viền đẹp như screenshot */
+  padding-top: calc(24px + env(safe-area-inset-top));
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* Hai khối cố định như hình */
+.image-background {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(100vw - 24px - 24px - 380px - 32px); /* trừ cột phải + gap */
+  max-width: 780px;                                /* giới hạn đẹp desktop */
+  height: calc(var(--vh) - 48px);                  /* trừ padding */
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 24px;
+  background: rgba(var(--glass-bg), .18);
+  border: 1px solid var(--glass-stroke);
+  -webkit-backdrop-filter: blur(var(--blur-med));
+  backdrop-filter: blur(var(--blur-med));
+}
+.product-image-desktop{
+  max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 20px;
+}
+
+/* Thẻ info bên phải – cố định, không nhảy khi bàn phím mở */
+.info-panel {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 360px;                       /* đúng tỉ lệ thẻ trong ảnh */
+  border-radius: 20px;
+  background: rgba(var(--glass-bg), .9);
+  border: 1px solid var(--glass-stroke);
+  box-shadow: 0 20px 40px rgba(31,38,135,.18);
+  padding: 16px;
+  -webkit-backdrop-filter: blur(var(--blur-med));
+  backdrop-filter: blur(var(--blur-med));
+}
+
+/* Tắt mọi cuộn & cử chỉ kéo */
+#stage, .container, .result-page { overflow: hidden !important; }
+body, #stage { touch-action: none; }
+
+/* Bỏ các layout mobile cũ để không đổi bố cục */
+@media (max-width: 768px){
+  .result-page{ display: block !important; }
+  .keyboard-spacer{ display: none !important; }
+  .floating-info-box{ position: static; } /* nếu còn class cũ */
+  .image-background::after{ content: none !important; }
+}
+/* ===== FIXED 2-COLUMN VIEW + 40% EMPTY SPACE AT BOTTOM ===== */
+:root {
+  --vh: 100svh;       /* iOS-friendly viewport height */
+  --vw: 100svw;
+  --gap: 32px;
+  --panel-w: 360px;
+  --pad: 24px;
+  --empty-bottom: 40vh; /* 40% trống cho bàn phím */
+}
+
+/* Tắt cuộn, cố định layout */
+html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+  touch-action: none;
+}
+
+/* Sân khấu toàn màn hình */
+#result-page-container {
+  position: fixed;
+  inset: 0;
+  width: var(--vw);
+  height: var(--vh);
+  padding: var(--pad);
+  padding-top: calc(var(--pad) + env(safe-area-inset-top));
+  padding-bottom: calc(var(--pad) + env(safe-area-inset-bottom));
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Lưới 2 cột cố định (ảnh trái - info phải) */
+.result-page {
+  display: grid;
+  grid-template-columns: 1fr var(--gap) var(--panel-w);
+  grid-template-rows: 1fr;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - var(--empty-bottom)); /* giữ 40% trống ở dưới */
+  overflow: hidden;
+}
+
+/* Ảnh sản phẩm bên trái */
+.image-background {
+  grid-column: 1 / 2;
+  grid-row: 1;
+  height: 100%;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--glass-bg), .18);
+  border: 1px solid var(--glass-stroke);
+  -webkit-backdrop-filter: blur(var(--blur-med));
+  backdrop-filter: blur(var(--blur-med));
+  overflow: hidden;
+}
+
+.product-image-desktop {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+/* Thông tin bên phải */
+.content-overlay {
+  all: unset;
+  grid-column: 3 / 4;
+  grid-row: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-info-box {
+  width: var(--panel-w);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--glass-stroke);
+  box-shadow: 0 20px 40px rgba(31, 38, 135, 0.18);
+  padding: 16px;
+  -webkit-backdrop-filter: blur(var(--blur-med));
+  backdrop-filter: blur(var(--blur-med));
+}
+
+/* Ngăn layout mobile cũ */
+@media (max-width: 768px) {
+  .content-overlay,
+  .floating-info-box {
+    position: static !important;
+    all: unset !important;
+  }
+  .image-background::after {
+    content: none !important;
+  }
+}
+
