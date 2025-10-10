@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+  <!-- GIỮ thẻ viewport này, xoá thẻ viewport thứ hai -->
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tìm kiếm sản phẩm</title>
   <link rel="stylesheet" href="style.css">
   <script>
-    setInterval(() => {
-      window.location.reload();
-    }, 600000);
+    setInterval(() => { window.location.reload(); }, 600000);
   </script>
 </head>
 <body>
@@ -25,24 +25,23 @@
     </div>
   </div>
 
-  <div class="container" id="result-page-container" style="display: none;">
-    <div class="result-page">
+  <!-- stage = khung cố định toàn màn hình cho trang kết quả -->
+  <div class="container" id="result-page-container" style="display:none;" >
+    <div class="result-page" id="stage-inner">
       <div class="image-background" id="image-background">
-        <img src="comap_logo.jpg" alt="Product Image" id="product-image-desktop" class="product-image-desktop">
+        <img src="comap_logo.jpg" alt="Product Image"
+             id="product-image-desktop" class="product-image-desktop">
       </div>
 
+      <!-- dùng chính box này làm panel bên phải -->
       <div class="content-overlay">
         <div class="floating-info-box">
-          
           <div class="search-container-result">
             <input type="text" id="resultProductCode" placeholder="Nhập mã khác...">
             <button class="search-button" id="resultSearchButton">Tìm</button>
           </div>
-          
           <p id="product-location">N/A</p>
-          
           <p id="product-price">N/A</p>
-
           <ul id="size-list"></ul>
         </div>
       </div>
@@ -50,5 +49,27 @@
   </div>
 
   <script src="app.js"></script>
+
+  <!-- KHÓA viewport theo visualViewport để không nhảy khi mở/tắt bàn phím -->
+  <script>
+  (function lockViewport(){
+    const setSize = () => {
+      const vv = window.visualViewport;
+      const w = vv ? vv.width  : window.innerWidth;
+      const h = vv ? vv.height : window.innerHeight;
+      document.documentElement.style.setProperty('--vw', w + 'px');
+      document.documentElement.style.setProperty('--vh', h + 'px');
+      window.scrollTo(0,0);
+    };
+    setSize();
+    if (window.visualViewport){
+      visualViewport.addEventListener('resize', setSize);
+      visualViewport.addEventListener('scroll',  setSize);
+    }
+    window.addEventListener('orientationchange', setSize);
+    // chặn kéo/scroll mặc định
+    document.addEventListener('touchmove', e => e.preventDefault(), {passive:false});
+  })();
+  </script>
 </body>
 </html>
