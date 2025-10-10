@@ -211,3 +211,141 @@ html,body{
 .image-background::after {
   content: none;
 }
+
+/* ===============================
+   LAYOUT THEO PHÁC THẢO
+   - Left: Product Picture (to)
+   - Right (trên): Product Info
+   - Right (dưới): Product Location
+   - Mobile: chừa chỗ cho bàn phím
+================================ */
+
+/* Thêm token cho khoảng trống bàn phím trên mobile */
+:root{
+  --kb-space: 38vh;           /* chỗ trống bàn phím (có thể chỉnh 32–44vh) */
+  --side-col-min: 260px;      /* min-width cột phải desktop */
+  --side-col-max: 360px;      /* max-width cột phải desktop */
+}
+
+/* ===== Desktop layout bằng CSS Grid ===== */
+.result-page{
+  display:grid;
+  grid-template-columns: 1fr minmax(var(--side-col-min), var(--side-col-max));
+  grid-template-rows: 1fr auto;                     /* info trên, location dưới */
+  grid-template-areas:
+    "image info"
+    "image location";
+  gap: 18px;
+  width:100%;
+  padding:24px;
+}
+
+.image-background{
+  grid-area:image;
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+  background: rgba(var(--glass-bg), .22);
+  border-right:none;                   /* bỏ viền phải cũ */
+  border:1px solid var(--glass-stroke);
+  border-radius: var(--radius-lg);
+  -webkit-backdrop-filter: blur(var(--blur-med));
+  backdrop-filter: blur(var(--blur-med));
+}
+
+.product-image-desktop{
+  width:100%; height:auto; max-height:68vh; object-fit:contain;
+  border-radius:var(--radius-lg);
+}
+
+/* Ô INFO (trên, bên phải) */
+.info-panel{
+  grid-area:info;
+  display:flex; flex-direction:column; gap:12px;
+  background: rgba(var(--glass-bg), .25);
+  border:1px solid var(--glass-stroke);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  padding:16px;
+  -webkit-backdrop-filter: blur(var(--blur-med));
+  backdrop-filter: blur(var(--blur-med));
+}
+
+/* Ô LOCATION (dưới, bên phải) */
+.location-panel{
+  grid-area:location;
+  background: rgba(var(--glass-bg), .22);
+  border:1px solid var(--glass-stroke);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  padding:16px;
+  -webkit-backdrop-filter: blur(var(--blur-med));
+  backdrop-filter: blur(var(--blur-med));
+}
+
+/* Đồng bộ style text nhanh */
+#product-location{font-weight:700;color:#111827}
+#product-price{font-weight:800;color:#111827;font-size:1.1rem}
+
+/* ===== Mobile layout + chừa chỗ bàn phím ===== */
+@media (max-width: 768px){
+  html, body{padding:0}
+  .container{height:100%;width:100%;border-radius:0;box-shadow:none}
+
+  /* Lưới 2 cột mảnh (ảnh to bên trái ~65%), và 2 hàng:
+     hàng 1: info (phải), hàng 2: location (phải) */
+  .result-page{
+    display:grid;
+    grid-template-columns: 65% 35%;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "image info"
+      "image location";
+    gap:10px;
+    height: calc(100vh - var(--kb-space));
+    padding:10px;
+  }
+
+  .image-background{
+    padding:8px;
+    border-radius:12px;
+    background: rgba(var(--glass-bg), .18);
+  }
+
+  .product-image-desktop{display:block; max-height:100%;}
+
+  .info-panel,
+  .location-panel{
+    padding:10px;
+    border-radius:12px;
+    background: rgba(var(--glass-bg), .28);
+    -webkit-backdrop-filter: blur(var(--blur-strong));
+    backdrop-filter: blur(var(--blur-strong));
+    border:1px solid rgba(255,255,255,.55);
+    box-shadow: 0 8px 24px rgba(31,38,135,.18);
+  }
+
+  /* List size gọn hơn */
+  #size-list{gap:6px; flex-wrap:wrap}
+  #size-list li{
+    padding:6px 8px; font-size:.82rem; border-radius:8px
+  }
+
+  /* Khoảng trống dành cho bàn phím ở cuối trang */
+  .keyboard-spacer{
+    height: var(--kb-space);
+    width: 100%;
+    pointer-events:none;
+    /* an toàn với safe-area trên iOS */
+    padding-bottom: env(safe-area-inset-bottom);
+    background: transparent; /* để trống theo yêu cầu */
+  }
+}
+
+/* Giữ nguyên tối ưu a11y & motion */
+:focus-visible{outline:2px dashed var(--primary);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+
+/* Nếu bạn đang dùng lớp phủ ảnh cũ, tắt đi để ảnh rõ trên layout mới */
+.image-background::after{content:none !important;}
