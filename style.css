@@ -349,3 +349,22 @@ html,body{
 
 /* Nếu bạn đang dùng lớp phủ ảnh cũ, tắt đi để ảnh rõ trên layout mới */
 .image-background::after{content:none !important;}
+/* ===== TẮT CUỘN NGANG & DỌC ===== */
+html, body {
+  overflow: hidden !important;
+  height: 100%;
+  width: 100%;
+  overscroll-behavior: none; /* ngăn kéo cuộn trên mobile */
+}
+
+/* Nếu có container chính */
+.container {
+  overflow: hidden !important;
+}
+
+/* Với layout grid, đảm bảo nội dung không tràn */
+.result-page {
+  overflow: hidden !important;
+  max-height: 100vh;
+  max-width: 100vw;
+}
