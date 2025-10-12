@@ -32,12 +32,14 @@
   /* Layout */
   --container-max: 950px;
   --pad: 15px;
+
+  /* Mobile Layout Variables - EDIT HERE */
+  --keyboard-space: 40vh; /* Khoảng trống dưới: 40% chiều cao màn hình */
 }
 
 /* ---------- Reset & Base ---------- */
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{
-  height:100%;width:100%;
   font-family:'Nunito',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   background: var(--bg);
   color: var(--fg);
@@ -53,14 +55,12 @@ html,body{
   border:1px solid var(--glass-stroke);
   box-shadow: var(--glass-shadow);
   overflow:hidden;
-  /* subtle gradient sheen */
   background-image:
     linear-gradient(135deg, rgba(255,255,255,.28), rgba(255,255,255,.14) 40%, rgba(255,255,255,.10));
   -webkit-backdrop-filter: blur(var(--blur-strong));
   backdrop-filter: blur(var(--blur-strong));
 }
 
-/* Fallback if no backdrop support: keep it classy */
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
   .container{
     background:#ffffff;
@@ -95,226 +95,123 @@ html,body{
 .search-button:active{transform:translateY(0);opacity:.95}
 
 /* ---------- Result Page (Desktop) ---------- */
-.result-page{display:flex;width:100%}
-.image-background{
-  flex:0 0 45%;
-  display:flex;align-items:center;justify-content:center;padding:20px;
-  background: rgba(var(--glass-bg), .22);
-  border-right:1px solid var(--glass-stroke);
-  -webkit-backdrop-filter: blur(var(--blur-med)); backdrop-filter: blur(var(--blur-med));
-}
-.product-image-desktop{
-  width:100%;height:auto;max-height:500px;object-fit:contain;border-radius:var(--radius-lg)
+@media (min-width: 769px) {
+    .result-page{
+        display: grid;
+        grid-template-columns: 1fr minmax(300px, 380px);
+        gap: 24px;
+        width: 100%;
+        padding: 24px;
+        align-items: start;
+    }
+
+    .image-background{
+        grid-column: 1 / 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(var(--glass-bg), .22);
+        border: 1px solid var(--glass-stroke);
+        border-radius: var(--radius-lg);
+        -webkit-backdrop-filter: blur(var(--blur-med));
+        backdrop-filter: blur(var(--blur-med));
+        padding: 20px;
+    }
+
+    .product-image-desktop{
+        width: 100%;
+        height: auto;
+        max-height: 70vh;
+        object-fit: contain;
+        border-radius: var(--radius-lg);
+    }
+
+    .content-overlay{
+        grid-column: 2 / 3;
+    }
+
+    .floating-info-box{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background: rgba(var(--glass-bg), .25);
+        border: 1px solid var(--glass-stroke);
+        -webkit-backdrop-filter: blur(var(--blur-med));
+        backdrop-filter: blur(var(--blur-med));
+        border-radius: var(--radius-lg);
+        box-shadow: var(--glass-shadow);
+        padding: 20px;
+    }
+
+    #product-location{font-weight:600;color:#111827}
+    #product-price{font-weight:800;color:#111827;font-size:1.25rem}
+    #size-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+    #size-list li{
+      display:flex;align-items:center;justify-content:center;gap:6px;
+      padding:8px 12px;font-size:.9rem;font-weight:700;
+      background: var(--chip-bg);
+      border:1px solid var(--chip-stroke);
+      border-radius:10px;color:var(--chip-fg)
+    }
+    #size-list .sep{opacity:.6;color:var(--muted)}
+    #size-list .qty{color: var(--primary)}
 }
 
-#result-page-container .content-overlay{
-  flex:1;display:flex;flex-direction:column;padding:25px 30px;gap:18px
-}
 
-/* Floating info (desktop): glass card stack */
-#result-page-container .floating-info-box{
-  display:flex;flex-direction:column;gap:12px;
-  background: rgba(var(--glass-bg), .25);
-  border:1px solid var(--glass-stroke);
-  -webkit-backdrop-filter: blur(var(--blur-med)); backdrop-filter: blur(var(--blur-med));
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
-  padding:16px;
-}
-
-/* Quick text styles in the info box */
-#product-location{font-weight:600;color:#111827}
-#product-price{font-weight:800;color:#111827;font-size:1.15rem}
-
-/* Size list (desktop) */
-#size-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-#size-list li{
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  padding:6px 10px;font-size:.85rem;font-weight:700;
-  background: var(--chip-bg);
-  border:1px solid var(--chip-stroke);
-  border-radius:10px;color:var(--chip-fg)
-}
-#size-list .sep{opacity:.6;color:var(--muted)}
-#size-list .qty{color: var(--primary)}
-
-/* ---------- Mobile (Glass-First) ---------- */
+/* ========================================
+   MOBILE LAYOUT (YÊU CẦU CỦA BẠN)
+======================================== */
 @media (max-width: 768px){
-  html,body{padding:0}
-  .container{height:100%;width:100%;border-radius:0;box-shadow:none}
-
-  .result-page{position:relative;height:100%}
-  .product-image-desktop{display:none}
-
-  .image-background{
-    position:fixed;inset:0;z-index:1;background-size:cover;background-position:center;
-    /* Slight dim layer for readability on photos */
+  html, body{
+      padding:0;
+      touch-action: none; /* Ngăn cử chỉ cuộn */
   }
-  .image-background::after{
-    content:"";position:absolute;inset:0;
-    background: linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.15) 35%, rgba(0,0,0,.25));
-    pointer-events:none;
+  .container{
+      height: 100vh; /* Luôn chiếm toàn bộ chiều cao */
+      width: 100vw;  /* Luôn chiếm toàn bộ chiều rộng */
+      border-radius:0;
+      box-shadow:none;
+      padding: 10px;
+      display: flex;
+      align-items: flex-start; /* Căn nội dung lên trên cùng */
   }
 
-  .content-overlay{
-    position:absolute;inset:0;z-index:3;
-    display:flex;flex-direction:column;justify-content:flex-end;padding:12px;
-    pointer-events:none;
-  }
-
-  /* Glass bar — “Glass Skin” */
-  .floating-info-box{
-    pointer-events:auto;width:100%;padding:10px;border-radius:var(--radius-lg);
-    background: rgba(var(--glass-bg), .28);
-    -webkit-backdrop-filter: blur(var(--blur-strong)); backdrop-filter: blur(var(--blur-strong));
-    border:1px solid rgba(255,255,255,.55);
-    box-shadow: 0 8px 32px rgba(31,38,135,.22);
-    display:flex;flex-direction:row;align-items:center;gap:12px;
-  }
-
-  .search-container-result{display:flex;gap:8px;flex-grow:1}
-  .search-container-result input{
-    font-size:.95rem;padding:8px 12px;flex:1;
-    background: rgba(255,255,255,.35);
-    border:1px solid rgba(255,255,255,.7);
-    color:#1f2937;
-    -webkit-backdrop-filter: blur(var(--blur-med)); backdrop-filter: blur(var(--blur-med));
-  }
-  .search-container-result input::placeholder{color:var(--muted)}
-  .search-container-result button{font-size:.95rem;padding:8px 14px}
-
-  #product-location,#product-price{
-    font-weight:700;color:#111827;white-space:nowrap;text-shadow:none
-  }
-  #product-location{font-size:.95rem}
-  #product-price{font-size:1.15rem}
-
-  #size-list{
-    list-style:none;margin:0;padding:0;display:flex;flex-direction:row;gap:6px;flex-wrap:wrap
-  }
-  #size-list li{
-    padding:6px 8px;font-size:.8rem;font-weight:700;
-    background: rgba(255,255,255,.5);
-    border:1px solid rgba(255,255,255,.7);
-    border-radius:8px;color:#1f2937
-  }
-  #size-list .sep{opacity:.6;color:var(--muted)}
-  #size-list .qty{color: var(--primary)}
-}
-
-/* ---------- Micro Interactions & A11y ---------- */
-:focus-visible{outline:2px dashed var(--primary);outline-offset:2px}
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
-}
-/* Bỏ lớp phủ để hình ảnh hiển thị rõ */
-.image-background::after {
-  content: none;
-}
-
-/* ===============================
-   LAYOUT THEO PHÁC THẢO
-   - Left: Product Picture (to)
-   - Right (trên): Product Info
-   - Right (dưới): Product Location
-   - Mobile: chừa chỗ cho bàn phím
-================================ */
-
-/* Thêm token cho khoảng trống bàn phím trên mobile */
-:root{
-  --kb-space: 38vh;           /* chỗ trống bàn phím (có thể chỉnh 32–44vh) */
-  --side-col-min: 260px;      /* min-width cột phải desktop */
-  --side-col-max: 360px;      /* max-width cột phải desktop */
-}
-
-/* ===== Desktop layout bằng CSS Grid ===== */
-.result-page{
-  display:grid;
-  grid-template-columns: 1fr minmax(var(--side-col-min), var(--side-col-max));
-  grid-template-rows: 1fr auto;                     /* info trên, location dưới */
-  grid-template-areas:
-    "image info"
-    "image location";
-  gap: 18px;
-  width:100%;
-  padding:24px;
-}
-
-.image-background{
-  grid-area:image;
-  display:flex; align-items:center; justify-content:center;
-  padding:20px;
-  background: rgba(var(--glass-bg), .22);
-  border-right:none;                   /* bỏ viền phải cũ */
-  border:1px solid var(--glass-stroke);
-  border-radius: var(--radius-lg);
-  -webkit-backdrop-filter: blur(var(--blur-med));
-  backdrop-filter: blur(var(--blur-med));
-}
-
-.product-image-desktop{
-  width:100%; height:auto; max-height:68vh; object-fit:contain;
-  border-radius:var(--radius-lg);
-}
-
-/* Ô INFO (trên, bên phải) */
-.info-panel{
-  grid-area:info;
-  display:flex; flex-direction:column; gap:12px;
-  background: rgba(var(--glass-bg), .25);
-  border:1px solid var(--glass-stroke);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
-  padding:16px;
-  -webkit-backdrop-filter: blur(var(--blur-med));
-  backdrop-filter: blur(var(--blur-med));
-}
-
-/* Ô LOCATION (dưới, bên phải) */
-.location-panel{
-  grid-area:location;
-  background: rgba(var(--glass-bg), .22);
-  border:1px solid var(--glass-stroke);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
-  padding:16px;
-  -webkit-backdrop-filter: blur(var(--blur-med));
-  backdrop-filter: blur(var(--blur-med));
-}
-
-/* Đồng bộ style text nhanh */
-#product-location{font-weight:700;color:#111827}
-#product-price{font-weight:800;color:#111827;font-size:1.1rem}
-
-/* ===== Mobile layout + chừa chỗ bàn phím ===== */
-@media (max-width: 768px){
-  html, body{padding:0}
-  .container{height:100%;width:100%;border-radius:0;box-shadow:none}
-
-  /* Lưới 2 cột mảnh (ảnh to bên trái ~65%), và 2 hàng:
-     hàng 1: info (phải), hàng 2: location (phải) */
+  /* Khung nội dung chính (chiếm 60% phía trên) */
   .result-page{
     display:grid;
-    grid-template-columns: 65% 35%;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      "image info"
-      "image location";
+    /* Chia lưới: 3 phần cho ảnh, 1 phần cho thông tin */
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: "image content";
     gap:10px;
-    height: calc(100vh - var(--kb-space));
-    padding:10px;
+    width: 100%;
+    height: calc(100vh - var(--keyboard-space) - 20px); /* 60% cao, trừ đi padding */
   }
 
   .image-background{
+    grid-area: image;
     padding:8px;
     border-radius:12px;
     background: rgba(var(--glass-bg), .18);
+    border:1px solid rgba(255,255,255,.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .product-image-desktop{display:block; max-height:100%;}
+  .product-image-desktop{
+    display:block;
+    width: 100%;
+    height: 100%;
+    object-fit:contain;
+    max-height: 100%;
+  }
 
-  .info-panel,
-  .location-panel{
+  .content-overlay{
+    grid-area: content;
+    display: flex; /* Cho phép co giãn nội dung bên trong */
+  }
+
+  .floating-info-box{
     padding:10px;
     border-radius:12px;
     background: rgba(var(--glass-bg), .28);
@@ -322,75 +219,45 @@ html,body{
     backdrop-filter: blur(var(--blur-strong));
     border:1px solid rgba(255,255,255,.55);
     box-shadow: 0 8px 24px rgba(31,38,135,.18);
-  }
-
-  /* List size gọn hơn */
-  #size-list{gap:6px; flex-wrap:wrap}
-  #size-list li{
-    padding:6px 8px; font-size:.82rem; border-radius:8px
-  }
-
-  /* Khoảng trống dành cho bàn phím ở cuối trang */
-  .keyboard-spacer{
-    height: var(--kb-space);
+    /* Sắp xếp nội dung theo chiều dọc */
+    display:flex;
+    flex-direction:column;
+    gap:8px;
     width: 100%;
-    pointer-events:none;
-    /* an toàn với safe-area trên iOS */
-    padding-bottom: env(safe-area-inset-bottom);
-    background: transparent; /* để trống theo yêu cầu */
+  }
+
+  .search-container-result{flex-shrink: 0;} /* Không co nhỏ ô tìm kiếm */
+  .search-container-result input{font-size:.9rem; padding: 8px 12px;}
+  .search-container-result button{font-size:.9rem; padding: 8px 12px;}
+
+  #product-location, #product-price{font-weight:700;color:#111827; font-size: 0.9rem;}
+  #product-price{font-size: 1rem;}
+
+  #size-list{
+      list-style:none; margin:0; padding:0;
+      display:flex; flex-direction:column; /* Xếp size theo chiều dọc */
+      gap:5px;
+      overflow-y: auto; /* Thêm cuộn nếu danh sách size quá dài */
+  }
+  #size-list li{
+      padding: 5px; font-size:.8rem; border-radius:6px;
+      flex-shrink: 0;
   }
 }
 
-/* Giữ nguyên tối ưu a11y & motion */
+/* =================================
+   KHÓA VIEWPORT & TẮT CUỘN
+================================= */
+html, body {
+  overflow: hidden !important;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0; left: 0;
+  overscroll-behavior: none;
+}
 :focus-visible{outline:2px dashed var(--primary);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
 }
-
-/* Nếu bạn đang dùng lớp phủ ảnh cũ, tắt đi để ảnh rõ trên layout mới */
 .image-background::after{content:none !important;}
-/* ===== TẮT CUỘN NGANG & DỌC ===== */
-html, body {
-  overflow: hidden !important;
-  height: 100%;
-  width: 100%;
-  overscroll-behavior: none; /* ngăn kéo cuộn trên mobile */
-}
-
-/* Nếu có container chính */
-.container {
-  overflow: hidden !important;
-}
-
-/* Với layout grid, đảm bảo nội dung không tràn */
-.result-page {
-  overflow: hidden !important;
-  max-height: 100vh;
-  max-width: 100vw;
-}
-/* ===== KHÓA VIEWPORT & TẮT CUỘN CHO MOBILE ===== */
-html, body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden !important;
-  position: fixed;              /* giữ nguyên vị trí */
-  top: 0; left: 0;
-  overscroll-behavior: none;    /* ngăn bounce scroll trên iOS */
-  touch-action: none;           /* ngăn cuộn bằng cử chỉ */
-}
-
-/* Nếu có container chính */
-.container, .result-page {
-  height: 100%;
-  width: 100%;
-  overflow: hidden !important;
-  position: relative;
-}
-
-/* Dành cho Safari iOS: giữ nền không bị dời khi bàn phím mở */
-@supports (-webkit-touch-callout: none) {
-  html, body {
-    position: fixed;
-    overflow: hidden;
-  }
-}
