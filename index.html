@@ -1,75 +1,971 @@
+
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <!-- GIỮ thẻ viewport này, xoá thẻ viewport thứ hai -->
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta charset="UTF-8">
-  <title>Tìm kiếm sản phẩm</title>
-  <link rel="stylesheet" href="style.css">
-  <script>
-    setInterval(() => { window.location.reload(); }, 600000);
-  </script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tra Cứu Vị Trí Sản Phẩm</title>
+    <style>
+      :root {
+        font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont,
+          "Helvetica Neue", sans-serif;
+        color: #0f172a;
+        background-color: #eef2ff;
+        line-height: 1.5;
+      }
 
-  <div class="container" id="welcome-page-container">
-    <div class="welcome-page">
-      <div class="logo-container">
-        <img src="comap_logo.jpg" alt="CÔ MẬP FASHION NÈ" class="logo">
-      </div>
-      <div class="search-container">
-        <input type="text" id="welcomeProductCode" placeholder="Nhập mã sản phẩm">
-        <button class="search-button" id="welcomeSearchButton">Tìm</button>
-      </div>
-    </div>
-  </div>
+      * {
+        box-sizing: border-box;
+      }
 
-  <!-- stage = khung cố định toàn màn hình cho trang kết quả -->
-  <div class="container" id="result-page-container" style="display:none;" >
-    <div class="result-page" id="stage-inner">
-      <div class="image-background" id="image-background">
-        <img src="comap_logo.jpg" alt="Product Image"
-             id="product-image-desktop" class="product-image-desktop">
-      </div>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: clamp(1.25rem, 4vw, 3rem);
+        background: radial-gradient(
+              circle at 20% 20%,
+              rgba(99, 102, 241, 0.15),
+              transparent 35%
+            )
+            fixed,
+          radial-gradient(
+              circle at 80% 0%,
+              rgba(236, 72, 153, 0.18),
+              transparent 40%
+            )
+            fixed,
+          #eef2ff;
+      }
 
-      <!-- dùng chính box này làm panel bên phải -->
-      <div class="content-overlay">
-        <div class="floating-info-box">
-          <div class="search-container-result">
-            <input type="text" id="resultProductCode" placeholder="Nhập mã khác...">
-            <button class="search-button" id="resultSearchButton">Tìm</button>
-          </div>
-          <p id="product-location">N/A</p>
-          <p id="product-price">N/A</p>
-          <ul id="size-list"></ul>
+      main {
+        width: min(1200px, 100%);
+        background: #ffffff;
+        border-radius: 28px;
+        padding: clamp(1.5rem, 4vw, 3rem);
+        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.18);
+      }
+
+      header {
+        margin-bottom: 2rem;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: clamp(1.9rem, 5vw, 2.8rem);
+      }
+
+      header p {
+        margin: 0.3rem 0 0;
+        color: #475569;
+      }
+
+      .lookup-form {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 0.85rem;
+        margin-bottom: 1.25rem;
+        flex-wrap: wrap;
+      }
+
+      label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+        color: #475569;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        border-radius: 18px;
+        border: 1.5px solid #e0e7ff;
+        padding: 0.95rem 1.15rem;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-family: inherit;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      input[type="text"]::placeholder {
+        font-weight: 500;
+        letter-spacing: normal;
+      }
+
+      input[type="text"]:focus {
+        border-color: #818cf8;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        outline: none;
+      }
+
+      button {
+        border: none;
+        border-radius: 18px;
+        padding: 0.95rem 1.4rem;
+        font-size: 1rem;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        white-space: nowrap;
+      }
+
+      button[type="submit"] {
+        background: linear-gradient(135deg, #4338ca, #6366f1);
+        color: white;
+        box-shadow: 0 14px 30px rgba(79, 70, 229, 0.25);
+        padding-inline: clamp(1.2rem, 4vw, 2.4rem);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
+      button:not(:disabled):hover {
+        transform: translateY(-1px);
+        box-shadow: 0 18px 32px rgba(15, 23, 42, 0.25);
+      }
+
+      .status-bar {
+        border-radius: 20px;
+        padding: 0.9rem 1.15rem;
+        font-size: 0.96rem;
+        font-weight: 600;
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .status-bar[data-variant="idle"] {
+        background: #f8fafc;
+        color: #475569;
+      }
+
+      .status-bar[data-variant="loading"] {
+        background: #eef2ff;
+        color: #312e81;
+      }
+
+      .status-bar[data-variant="success"] {
+        background: #ecfdf5;
+        color: #047857;
+      }
+
+      .status-bar[data-variant="empty"] {
+        background: #fefce8;
+        color: #92400e;
+      }
+
+      .status-bar[data-variant="error"] {
+        background: #fef2f2;
+        color: #b91c1c;
+      }
+
+      .result-card {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .product-card {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.5rem;
+        background: #0f172a;
+        color: #f8fafc;
+        border-radius: 26px;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+      }
+
+      .product-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(99, 102, 241, 0.35),
+          transparent 50%
+        );
+        z-index: -1;
+        opacity: 0.8;
+      }
+
+      .product-visual {
+        background: rgba(15, 23, 42, 0.4);
+        padding: 1rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 3 / 4;
+        width: 100%;
+      }
+
+      .product-visual img {
+        width: 100%;
+        height: 100%;
+        border-radius: 18px;
+        object-fit: contain;
+        border: 1px solid rgba(248, 250, 252, 0.2);
+        background: rgba(15, 23, 42, 0.6);
+      }
+
+      .product-visual .placeholder {
+        width: 100%;
+        height: 100%;
+        border-radius: 18px;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.12),
+          rgba(255, 255, 255, 0.04)
+        );
+        display: grid;
+        place-items: center;
+        color: rgba(248, 250, 252, 0.7);
+        font-weight: 600;
+        letter-spacing: 0.2em;
+      }
+
+      .product-details h2 {
+        margin: 0 0 0.4rem;
+        font-size: clamp(1.6rem, 4vw, 2.4rem);
+        letter-spacing: 0.08em;
+      }
+
+      .product-meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1.4rem;
+      }
+
+      .meta-box {
+        padding: 1rem;
+        border-radius: 18px;
+        background: rgba(15, 23, 42, 0.45);
+        border: 1px solid rgba(248, 250, 252, 0.08);
+      }
+
+      .meta-box small {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.35em;
+        font-size: 0.72rem;
+        color: rgba(248, 250, 252, 0.7);
+      }
+
+      .meta-box strong {
+        display: block;
+        font-size: 1.35rem;
+        margin-top: 0.35rem;
+      }
+
+      .location-text {
+        margin: 1rem 0 0;
+        font-size: 1.05rem;
+        color: rgba(248, 250, 252, 0.9);
+      }
+
+      .location-block {
+        margin-top: 1rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .ghost-btn {
+        background: rgba(248, 250, 252, 0.08);
+        border: 1px solid rgba(248, 250, 252, 0.2);
+        color: rgba(248, 250, 252, 0.85);
+        padding-inline: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .primary-btn {
+        background: linear-gradient(135deg, #4338ca, #6366f1);
+        color: white;
+        box-shadow: 0 12px 20px rgba(79, 70, 229, 0.25);
+      }
+
+      .neutral-btn {
+        background: rgba(248, 250, 252, 0.1);
+        border: 1px solid rgba(248, 250, 252, 0.25);
+        color: rgba(248, 250, 252, 0.85);
+        padding-inline: 1rem;
+      }
+
+      .ghost-btn:disabled,
+      .neutral-btn:disabled,
+      .primary-btn:disabled {
+        opacity: 0.6;
+        box-shadow: none;
+      }
+
+      .location-editor {
+        margin-top: 0.75rem;
+        padding: 1rem;
+        border-radius: 18px;
+        border: 1px solid rgba(248, 250, 252, 0.12);
+        background: rgba(15, 23, 42, 0.55);
+      }
+
+      .location-editor textarea {
+        width: 100%;
+        min-height: 90px;
+        border-radius: 14px;
+        border: 1px solid rgba(248, 250, 252, 0.25);
+        background: rgba(15, 23, 42, 0.75);
+        color: #f8fafc;
+        font-family: inherit;
+        padding: 0.8rem 1rem;
+        resize: vertical;
+      }
+
+      .location-editor textarea:focus {
+        outline: none;
+        border-color: rgba(129, 140, 248, 0.8);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+      }
+
+      .location-actions {
+        margin-top: 0.8rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: flex-end;
+      }
+
+      .sizes-panel {
+        border-radius: 24px;
+        border: 1.5px solid #e0e7ff;
+        padding: 1.5rem;
+      }
+
+      .sizes-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .sizes-header h3 {
+        margin: 0;
+        font-size: 1.15rem;
+      }
+
+      .secondary-btn {
+        background: #f8fafc;
+        color: #1e1b4b;
+        border: 1.5px solid #c7d2fe;
+        padding-inline: 1.1rem;
+      }
+
+      .size-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.8rem;
+      }
+
+      .size-card {
+        border-radius: 18px;
+        padding: 0.8rem 1rem;
+        border: 1.5px solid #e0e7ff;
+        background: #f8fafc;
+      }
+
+      .size-card strong {
+        display: block;
+        font-size: 1.1rem;
+      }
+
+      .size-card span {
+        font-size: 0.9rem;
+        color: #475569;
+      }
+
+      .size-card[data-status="available"] {
+        background: #ecfdf5;
+        border-color: #a7f3d0;
+        color: #065f46;
+      }
+
+      .size-card[data-status="oos"] {
+        background: #fef2f2;
+        border-color: #fecaca;
+        color: #b91c1c;
+      }
+
+      .size-empty {
+        padding: 1rem;
+        border-radius: 16px;
+        background: #f1f5f9;
+        color: #475569;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      footer {
+        margin-top: 2.5rem;
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+
+        main {
+          padding: clamp(1rem, 4vw, 1.75rem);
+          border-radius: 22px;
+        }
+
+        .status-bar {
+          font-size: 0.9rem;
+          padding: 0.8rem 1rem;
+        }
+
+        .product-card {
+          grid-template-columns: 1fr;
+          padding: 1.25rem;
+          gap: 1rem;
+        }
+
+        .product-visual {
+          max-width: 380px;
+          margin: 0 auto;
+        }
+
+        .product-details h2 {
+          font-size: clamp(1.5rem, 6vw, 2rem);
+        }
+
+        .location-block {
+          flex-direction: column;
+          gap: 0.5rem;
+          align-items: stretch;
+        }
+
+        .ghost-btn {
+          width: 100%;
+        }
+
+        .location-actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .location-actions button {
+          width: 100%;
+        }
+
+        .product-meta {
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        }
+
+        .sizes-panel {
+          padding: 1.2rem;
+          border-radius: 20px;
+        }
+
+        .size-card {
+          padding: 0.7rem 0.85rem;
+        }
+
+        footer {
+          font-size: 0.8rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .lookup-form {
+          grid-template-columns: 1fr;
+        }
+
+        button[type="submit"] {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Tra cứu vị trí sản phẩm</h1>
+      </header>
+
+      <form id="lookup-form" class="lookup-form" autocomplete="off">
+        <div>
+          <label for="sku-input">Mã sản phẩm</label>
+          <input
+            id="sku-input"
+            type="text"
+            name="sku"
+            placeholder="VD: A324"
+            maxlength="20"
+            autocomplete="off"
+            required
+          />
         </div>
-      </div>
-    </div>
-  </div>
+        <div style="align-self: end">
+          <button type="submit" id="lookup-button">Tra cứu</button>
+        </div>
+      </form>
 
-  <script src="app.js"></script>
+      <div class="status-bar" id="status-bar" data-variant="idle" hidden></div>
 
-  <!-- KHÓA viewport theo visualViewport để không nhảy khi mở/tắt bàn phím -->
-  <script>
-  (function lockViewport(){
-    const setSize = () => {
-      const vv = window.visualViewport;
-      const w = vv ? vv.width  : window.innerWidth;
-      const h = vv ? vv.height : window.innerHeight;
-      document.documentElement.style.setProperty('--vw', w + 'px');
-      document.documentElement.style.setProperty('--vh', h + 'px');
-      window.scrollTo(0,0);
-    };
-    setSize();
-    if (window.visualViewport){
-      visualViewport.addEventListener('resize', setSize);
-      visualViewport.addEventListener('scroll',  setSize);
-    }
-    window.addEventListener('orientationchange', setSize);
-    // chặn kéo/scroll mặc định
-    document.addEventListener('touchmove', e => e.preventDefault(), {passive:false});
-  })();
-  </script>
-</body>
+      <section id="result-section" class="result-card" hidden>
+        <article class="product-card">
+          <div class="product-visual" id="product-visual">
+            <div class="placeholder">NO IMAGE</div>
+          </div>
+          <div class="product-details">
+            <h2 id="product-code">—</h2>
+            <div class="location-block">
+              <p id="product-location" class="location-text">
+                Đang tải thông tin vị trí...
+              </p>
+              <button type="button" class="ghost-btn" id="edit-location" hidden>
+                Chỉnh sửa
+              </button>
+            </div>
+            <div id="location-editor" class="location-editor" hidden>
+              <textarea
+                id="location-input"
+                placeholder="Nhập vị trí mới..."
+                maxlength="120"
+              ></textarea>
+              <div class="location-actions">
+                <button type="button" class="neutral-btn" id="cancel-location">
+                  Hủy
+                </button>
+                <button type="button" class="primary-btn" id="save-location">
+                  Lưu vị trí
+                </button>
+              </div>
+            </div>
+            <div class="product-meta">
+              <div class="meta-box">
+                <small>Giá bán</small>
+                <strong id="product-price">—</strong>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="sizes-panel" id="sizes-panel" hidden>
+          <div class="sizes-header">
+            <h3>Tình trạng size</h3>
+            <button
+              type="button"
+              class="secondary-btn"
+              id="toggle-sizes"
+              hidden
+            >
+              Hiện tất cả size
+            </button>
+          </div>
+          <div id="size-grid" class="size-grid"></div>
+        </article>
+      </section>
+
+      <footer>&copy; <span id="year-label"></span> Kho vận hành.</footer>
+    </main>
+
+    <script>
+      const API_URL =
+        "https://n8n-hongnhung198198-u40833.vm.elestio.app/webhook/location_sanpham";
+      const UPDATE_LOCATION_URL =
+        "https://n8n-hongnhung198198-u40833.vm.elestio.app/webhook/nhaplai-location";
+      const REQUEST_TIMEOUT = 12000;
+      const STATUS_AUTO_HIDE = 2600;
+
+      const form = document.getElementById("lookup-form");
+      const input = document.getElementById("sku-input");
+      const button = document.getElementById("lookup-button");
+      const statusBar = document.getElementById("status-bar");
+      const resultSection = document.getElementById("result-section");
+      const productCodeEl = document.getElementById("product-code");
+      const productPriceEl = document.getElementById("product-price");
+      const productLocationEl = document.getElementById("product-location");
+      const productVisualEl = document.getElementById("product-visual");
+      const sizePanel = document.getElementById("sizes-panel");
+      const sizeGrid = document.getElementById("size-grid");
+      const toggleSizesBtn = document.getElementById("toggle-sizes");
+      const editLocationBtn = document.getElementById("edit-location");
+      const locationEditor = document.getElementById("location-editor");
+      const locationInput = document.getElementById("location-input");
+      const saveLocationBtn = document.getElementById("save-location");
+      const cancelLocationBtn = document.getElementById("cancel-location");
+      const yearLabel = document.getElementById("year-label");
+
+      let cachedSizes = [];
+      let showAllSizes = false;
+      let currentSku = "";
+      let currentLocation = "";
+      let locationSaving = false;
+      let statusHideTimer = null;
+
+      yearLabel.textContent = new Date().getFullYear();
+
+      const currencyFormatter = new Intl.NumberFormat("vi-VN", {
+        style: "currency",
+        currency: "VND",
+        maximumFractionDigits: 0,
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        lookupProduct();
+      });
+
+      input.addEventListener("input", () => {
+        const { selectionStart, selectionEnd } = input;
+        input.value = input.value.toUpperCase();
+        input.setSelectionRange(selectionStart, selectionEnd);
+      });
+
+      editLocationBtn.addEventListener("click", () => {
+        if (!locationSaving) enterLocationEdit();
+      });
+
+      cancelLocationBtn.addEventListener("click", () => {
+        if (!locationSaving) cancelLocationEdit();
+      });
+
+      saveLocationBtn.addEventListener("click", () => {
+        if (!locationSaving) submitLocationUpdate();
+      });
+
+      async function lookupProduct() {
+        const sku = input.value.trim().toUpperCase();
+        if (!sku) {
+          updateStatus("Vui lòng nhập mã sản phẩm.", "error");
+          return;
+        }
+
+        input.value = "";
+        clearCurrentProduct();
+
+        showAllSizes = false;
+        cachedSizes = [];
+        toggleSizesBtn.hidden = true;
+        sizePanel.hidden = true;
+        resultSection.hidden = true;
+        setLoadingState(true);
+        updateStatus("Đang truy vấn dữ liệu sản phẩm...", "loading");
+
+        try {
+          const product = await fetchProduct(sku);
+          if (!product) {
+            updateStatus("Không tìm thấy dữ liệu cho mã " + sku, "empty");
+            return;
+          }
+          renderProduct(sku, product);
+          updateStatus("", "idle");
+        } catch (error) {
+          console.error(error);
+          const message =
+            error.name === "AbortError"
+              ? "Quá thời gian chờ. Vui lòng thử lại."
+              : error.message || "Không thể lấy dữ liệu. Thử lại sau.";
+          updateStatus(message, "error");
+        } finally {
+          setLoadingState(false);
+        }
+      }
+
+      async function fetchProduct(sku) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sku }),
+          signal: controller.signal,
+        }).catch((error) => {
+          if (error.name === "AbortError") throw error;
+          throw new Error("Không thể kết nối webhook.");
+        });
+
+        clearTimeout(timeout);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(
+            `Webhook trả về lỗi ${response.status}: ${errorText.substring(
+              0,
+              120
+            )}`
+          );
+        }
+
+        let payload;
+        try {
+          payload = await response.json();
+        } catch (error) {
+          const fallback = await response.text();
+          throw new Error(
+            "Dữ liệu webhook không hợp lệ: " + fallback.substring(0, 120)
+          );
+        }
+
+        const blocks = normalizePayload(payload);
+        if (!blocks.length) return null;
+
+        const info =
+          blocks.find((item) => "price" in item || "sizes" in item) ??
+          blocks[0];
+        const locationEntry =
+          blocks.find((item) => "Location" in item || "location" in item) ??
+          {};
+
+        return {
+          found: info?.found ?? true,
+          price: Number(info?.price) || null,
+          imageUrl: info?.imageUrl || "",
+          sizes: Array.isArray(info?.sizes) ? info.sizes : [],
+          location: locationEntry.Location || locationEntry.location || "",
+        };
+      }
+
+      function normalizePayload(payload) {
+        const wrap = (value) => (Array.isArray(value) ? value : [value]);
+        const flatten = (value) => value.flatMap((item) => {
+          if (item && Array.isArray(item.data)) return item.data;
+          if (item && typeof item.data === "object" && item.data !== null) {
+            return [item.data];
+          }
+          return [item];
+        });
+        try {
+          return flatten(wrap(payload));
+        } catch {
+          return [];
+        }
+      }
+
+      function renderProduct(sku, product) {
+        resultSection.hidden = false;
+
+        currentSku = sku;
+        currentLocation = product.location || "";
+
+        productCodeEl.textContent = sku;
+        productPriceEl.textContent = product.price
+          ? currencyFormatter.format(product.price)
+          : "Chưa có";
+        updateLocationText(currentLocation);
+        editLocationBtn.hidden = false;
+        cancelLocationEdit();
+
+        renderImage(product.imageUrl);
+        cachedSizes = Array.isArray(product.sizes) ? product.sizes : [];
+        renderSizes();
+      }
+
+      function renderImage(url) {
+        productVisualEl.innerHTML = "";
+        if (url) {
+          const img = document.createElement("img");
+          img.src = url;
+          img.alt = "Ảnh sản phẩm";
+          img.loading = "lazy";
+          img.addEventListener("error", () => {
+            productVisualEl.innerHTML =
+              '<div class="placeholder">NO IMAGE</div>';
+          });
+          productVisualEl.appendChild(img);
+        } else {
+          productVisualEl.innerHTML =
+            '<div class="placeholder">NO IMAGE</div>';
+        }
+      }
+
+      function renderSizes() {
+        const hasSizes = cachedSizes.length > 0;
+        sizePanel.hidden = !hasSizes;
+
+        if (!hasSizes) {
+          sizeGrid.innerHTML = "";
+          return;
+        }
+
+        const filtered = showAllSizes
+          ? cachedSizes
+          : cachedSizes.filter((size) => Number(size.stock) <= 0);
+
+        if (!filtered.length) {
+          sizeGrid.innerHTML =
+            '<div class="size-empty">Tất cả size đang còn hàng. (Đang ẩn size tồn &gt; 0)</div>';
+        } else {
+          sizeGrid.innerHTML = filtered
+            .map((item) => {
+              const stock = Number(item.stock) || 0;
+              const status = stock > 0 ? "available" : "oos";
+              return `
+                <div class="size-card" data-status="${status}">
+                  <strong>${item.size || "SIZE"}</strong>
+                  <span>${stock > 0 ? `${stock} chiếc` : "Hết hàng"}</span>
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        const hasAvailable = cachedSizes.some(
+          (item) => Number(item.stock) > 0
+        );
+        toggleSizesBtn.hidden = !hasAvailable;
+        toggleSizesBtn.textContent = showAllSizes
+          ? "Ẩn size còn hàng"
+          : "Hiện tất cả size";
+      }
+
+      toggleSizesBtn.addEventListener("click", () => {
+        showAllSizes = !showAllSizes;
+        renderSizes();
+      });
+
+      function updateStatus(message, variant = "idle", autoHideMs = 0) {
+        clearTimeout(statusHideTimer);
+        if (!message) {
+          statusBar.hidden = true;
+          statusBar.dataset.variant = "idle";
+          statusBar.textContent = "";
+          return;
+        }
+        statusBar.hidden = false;
+        statusBar.dataset.variant = variant;
+        statusBar.textContent = message;
+        if (autoHideMs > 0) {
+          statusHideTimer = window.setTimeout(() => {
+            updateStatus("", "idle");
+          }, autoHideMs);
+        }
+      }
+
+      function updateLocationText(location) {
+        productLocationEl.textContent = location
+          ? `Vị trí: ${location}`
+          : "Chưa có thông tin vị trí.";
+      }
+
+      function clearCurrentProduct() {
+        currentSku = "";
+        currentLocation = "";
+        editLocationBtn.hidden = true;
+        locationEditor.hidden = true;
+        productLocationEl.hidden = false;
+        locationInput.value = "";
+        updateLocationText("");
+        setLocationSaving(false);
+      }
+
+      function enterLocationEdit() {
+        if (!currentSku) {
+          updateStatus("Chưa có sản phẩm để chỉnh sửa.", "error", STATUS_AUTO_HIDE);
+          return;
+        }
+        locationInput.value = currentLocation || "";
+        locationEditor.hidden = false;
+        productLocationEl.hidden = true;
+        editLocationBtn.hidden = true;
+        locationInput.focus();
+      }
+
+      function cancelLocationEdit() {
+        locationEditor.hidden = true;
+        productLocationEl.hidden = false;
+        editLocationBtn.hidden = !currentSku;
+        locationInput.value = "";
+        setLocationSaving(false);
+      }
+
+      function setLocationSaving(isSaving) {
+        locationSaving = isSaving;
+        saveLocationBtn.disabled = isSaving;
+        cancelLocationBtn.disabled = isSaving;
+        locationInput.disabled = isSaving;
+      }
+
+      async function submitLocationUpdate() {
+        if (!currentSku) {
+          updateStatus("Chưa có sản phẩm để chỉnh sửa.", "error", STATUS_AUTO_HIDE);
+          return;
+        }
+        const newLocation = locationInput.value.trim();
+        if (!newLocation) {
+          updateStatus("Vui lòng nhập vị trí mới.", "error", STATUS_AUTO_HIDE);
+          locationInput.focus();
+          return;
+        }
+        if (newLocation === currentLocation) {
+          updateStatus("Vị trí chưa thay đổi.", "empty", STATUS_AUTO_HIDE);
+          cancelLocationEdit();
+          return;
+        }
+
+        setLocationSaving(true);
+        updateStatus("Đang cập nhật vị trí...", "loading");
+
+        try {
+          const response = await fetch(UPDATE_LOCATION_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              sku: currentSku,
+              location: newLocation,
+              previousLocation: currentLocation,
+            }),
+          });
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(
+              `Webhook trả về lỗi ${response.status}: ${errorText.substring(
+                0,
+                120
+              )}`
+            );
+          }
+
+          currentLocation = newLocation;
+          updateLocationText(currentLocation);
+          cancelLocationEdit();
+          updateStatus("Đã cập nhật vị trí.", "success", STATUS_AUTO_HIDE);
+        } catch (error) {
+          console.error(error);
+          updateStatus(
+            error.message || "Không thể cập nhật vị trí.",
+            "error"
+          );
+        } finally {
+          setLocationSaving(false);
+        }
+      }
+
+      function setLoadingState(isLoading) {
+        button.disabled = isLoading;
+        input.disabled = isLoading;
+        if (!isLoading) {
+          input.focus();
+        }
+      }
+    </script>
+  </body>
 </html>
