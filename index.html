@@ -9,13 +9,18 @@
       :root {
         font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont,
           "Helvetica Neue", sans-serif;
-        color: #0f172a;
-        background-color: #eef2ff;
+        color: #111111;
+        background-color: #f4f4f4;
         line-height: 1.5;
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       * {
         box-sizing: border-box;
+      }
+
+      [hidden] {
+        display: none !important;
       }
 
       body {
@@ -24,27 +29,34 @@
         display: flex;
         justify-content: center;
         padding: clamp(1.25rem, 4vw, 3rem);
-        background: radial-gradient(
-              circle at 20% 20%,
-              rgba(99, 102, 241, 0.15),
-              transparent 35%
-            )
-            fixed,
-          radial-gradient(
-              circle at 80% 0%,
-              rgba(236, 72, 153, 0.18),
-              transparent 40%
-            )
-            fixed,
-          #eef2ff;
+        background-color: #f2f2f2;
+        overflow-y: scroll; /* Giữ thanh cuộn để tránh layout shift */
+        position: relative;
+        isolation: isolate;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: -25%;
+        z-index: -1;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 18% 22%, rgba(0, 0, 0, 0.09), transparent 42%),
+          radial-gradient(circle at 78% 28%, rgba(0, 0, 0, 0.06), transparent 44%),
+          radial-gradient(circle at 52% 82%, rgba(0, 0, 0, 0.05), transparent 50%);
+        filter: blur(22px);
+        transform: translate3d(0, 0, 0);
+        animation: ambientFloat 10s var(--ease-out-expo) infinite alternate;
       }
 
       main {
         width: min(1200px, 100%);
         background: #ffffff;
-        border-radius: 28px;
+        border-radius: 40px;
         padding: clamp(1.5rem, 4vw, 3rem);
-        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.18);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        animation: fadeInMain 0.8s var(--ease-out-expo);
       }
 
       header {
@@ -54,17 +66,20 @@
 
       header h1 {
         margin: 0 0 0.4rem;
-        font-size: clamp(2rem, 5vw, 3rem);
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
       }
 
       header p {
         margin: 0.3rem 0 0;
-        color: #475569;
+        color: #666;
       }
 
       .lookup-form {
         display: flex;
         align-items: center;
+        flex-wrap: nowrap;
         gap: 0.75rem;
         margin: 0 auto 1.25rem;
         max-width: 460px;
@@ -86,15 +101,17 @@
       label {
         display: block;
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 500;
         margin-bottom: 0.35rem;
-        color: #475569;
+        color: #666;
       }
 
       input[type="text"] {
         flex: 1 1 auto;
-        border-radius: 18px;
-        border: 1.5px solid #e0e7ff;
+        min-width: 0;
+        border-radius: 100px;
+        border: 1px solid #e5e5e5;
+        background: #f9f9f9;
         padding: 0.95rem 1.15rem;
         font-size: 1rem;
         font-weight: 600;
@@ -110,14 +127,15 @@
       }
 
       input[type="text"]:focus {
-        border-color: #818cf8;
-        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        border-color: #000;
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
         outline: none;
       }
 
       button {
         border: none;
-        border-radius: 18px;
+        border-radius: 100px;
         padding: 0.95rem 1.4rem;
         font-size: 1rem;
         font-weight: 600;
@@ -128,9 +146,9 @@
       }
 
       button[type="submit"] {
-        background: linear-gradient(135deg, #4338ca, #6366f1);
+        background: #000;
         color: white;
-        box-shadow: 0 14px 30px rgba(79, 70, 229, 0.25);
+        box-shadow: none;
         padding-inline: clamp(1.2rem, 4vw, 2.4rem);
       }
 
@@ -143,11 +161,37 @@
 
       button:not(:disabled):hover {
         transform: translateY(-1px);
-        box-shadow: 0 18px 32px rgba(15, 23, 42, 0.25);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      button:not(:disabled):active {
+        transform: translateY(0);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      }
+
+      button[type="submit"].loading {
+        color: transparent;
+        position: relative;
+      }
+
+      button[type="submit"].loading::after {
+        content: "";
+        position: absolute;
+        width: 1.2em;
+        height: 1.2em;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
       }
 
       .status-bar {
-        border-radius: 20px;
+        border-radius: 100px;
         padding: 0.9rem 1.15rem;
         font-size: 0.96rem;
         font-weight: 600;
@@ -157,31 +201,61 @@
         margin: 0 auto 1.5rem;
         max-width: 520px;
         width: 100%;
+        animation: slideDown 0.4s var(--ease-out-expo);
       }
 
       .status-bar[data-variant="idle"] {
-        background: #f8fafc;
-        color: #475569;
+        background: #f9f9f9;
+        color: #666;
       }
 
       .status-bar[data-variant="loading"] {
-        background: #eef2ff;
-        color: #312e81;
+        background: #f0f0f0;
+        color: #000;
       }
 
       .status-bar[data-variant="success"] {
-        background: #ecfdf5;
-        color: #047857;
+        background: #f0fdf4;
+        color: #15803d;
       }
 
       .status-bar[data-variant="empty"] {
-        background: #fefce8;
-        color: #92400e;
+        background: #fffbeb;
+        color: #b45309;
       }
 
       .status-bar[data-variant="error"] {
         background: #fef2f2;
         color: #b91c1c;
+      }
+
+      .top-progress {
+        max-width: 520px;
+        width: 100%;
+        height: 10px;
+        margin: 0.25rem auto 1.25rem;
+        border-radius: 999px;
+        background: #f0f0f0;
+        overflow: hidden;
+        position: relative;
+        animation: fadeInUp 0.35s var(--ease-out-expo);
+      }
+
+      .top-progress .bar {
+        position: absolute;
+        inset: 0;
+        width: 45%;
+        border-radius: inherit;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.18) 35%,
+          rgba(0, 0, 0, 0.32) 50%,
+          rgba(0, 0, 0, 0.18) 65%,
+          rgba(0, 0, 0, 0) 100%
+        );
+        animation: progressIndeterminate 0.9s linear infinite;
+        filter: blur(0.2px);
       }
 
       .result-card {
@@ -193,9 +267,9 @@
       }
 
       .product-card {
-        background: #e0f2fe;
-        border-radius: 26px;
-        border: 1px solid #bae6fd;
+        background: #fff;
+        border-radius: 32px;
+        border: 1px solid #f0f0f0;
         padding: 0;
         overflow: hidden;
         position: relative;
@@ -203,15 +277,7 @@
       }
 
       .product-card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          circle at top right,
-          rgba(59, 130, 246, 0.18),
-          transparent 55%
-        );
-        z-index: -1;
+        display: none;
       }
 
       .product-visual {
@@ -221,7 +287,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #dbeafe;
+        background: #f7f7f7;
       }
 
       .product-visual img,
@@ -233,39 +299,87 @@
 
       .product-visual img {
         object-fit: contain;
-        background: #eff6ff;
+        background: #f7f7f7;
       }
 
       .product-visual .placeholder {
-        background: linear-gradient(145deg, #f8fafc, #e0f2fe);
+        background: #f7f7f7;
         display: grid;
         place-items: center;
-        color: #3b82f6;
+        color: #ccc;
         font-weight: 600;
         letter-spacing: 0.2em;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Hiệu ứng Skeleton Loading khi chưa có ảnh */
+      .product-visual .placeholder::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+        animation: shimmer 1.5s infinite;
       }
 
       .location-panel {
-        border-radius: 26px;
-        border: 1.5px solid #e0e7ff;
-        background: #f8fbff;
+        border-radius: 32px;
+        border: 1px solid #f0f0f0;
+        background: #fff;
         padding: 1.35rem;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        box-shadow: none;
+      }
+
+      .skeleton-block {
+        height: 1rem;
+        border-radius: 999px;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.06),
+          rgba(0, 0, 0, 0.10),
+          rgba(0, 0, 0, 0.06)
+        );
+        background-size: 220% 100%;
+        animation: skeletonMove 1.1s ease-in-out infinite;
+      }
+
+      .skeleton-block.thin {
+        height: 0.7rem;
+      }
+
+      .skeleton-block.w-40 { width: 40%; }
+      .skeleton-block.w-70 { width: 70%; }
+
+      .location-skeleton {
+        display: grid;
+        gap: 0.6rem;
+        margin-top: 0.2rem;
       }
 
       .location-panel-header {
         display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
+        align-items: center;
+        justify-content: flex-start;
         gap: 0.85rem;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+      }
+
+      .location-panel-header > div {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .location-panel-header .ghost-btn {
+        margin-left: auto;
+        flex: 0 0 auto;
+        white-space: nowrap;
       }
 
       .location-label {
         text-transform: uppercase;
         letter-spacing: 0.26em;
         font-size: 0.73rem;
-        color: #6366f1;
+        color: #999;
         font-weight: 600;
         margin-bottom: 0.3rem;
       }
@@ -273,27 +387,28 @@
       .location-text {
         margin: 0;
         font-size: 1.05rem;
-        color: #0f172a;
+        color: #000;
+        font-weight: 600;
       }
 
       .ghost-btn {
-        background: white;
-        border: 1.5px solid #d4dcff;
-        color: #312e81;
+        background: transparent;
+        border: 1px solid #e5e5e5;
+        color: #000;
         padding-inline: 1.2rem;
         font-size: 0.95rem;
       }
 
       .primary-btn {
-        background: linear-gradient(135deg, #4338ca, #6366f1);
+        background: #000;
         color: white;
-        box-shadow: 0 12px 20px rgba(79, 70, 229, 0.25);
+        box-shadow: none;
       }
 
       .neutral-btn {
-        background: #f8fafc;
-        border: 1.5px solid #e2e8f0;
-        color: #334155;
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        color: #000;
         padding-inline: 1.1rem;
       }
 
@@ -307,18 +422,18 @@
       .location-editor {
         margin-top: 0.85rem;
         padding: 1rem;
-        border-radius: 18px;
-        border: 1.5px solid #dde3f8;
+        border-radius: 24px;
+        border: 1px solid #f0f0f0;
         background: white;
       }
 
       .location-editor textarea {
         width: 100%;
         min-height: 90px;
-        border-radius: 14px;
-        border: 1.5px solid #e2e8f0;
-        background: #f8fafc;
-        color: #0f172a;
+        border-radius: 16px;
+        border: 1px solid #e5e5e5;
+        background: #f9f9f9;
+        color: #000;
         font-family: inherit;
         padding: 0.85rem 1rem;
         resize: vertical;
@@ -326,8 +441,8 @@
 
       .location-editor textarea:focus {
         outline: none;
-        border-color: #818cf8;
-        box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+        border-color: #000;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
       }
 
       .location-actions {
@@ -338,82 +453,68 @@
         justify-content: flex-end;
       }
 
-      .sizes-panel {
-        border-radius: 24px;
-        border: 1.5px solid #e0e7ff;
-        padding: 1.5rem;
-      }
-
-      .sizes-header {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-      }
-
-      .sizes-header h3 {
-        margin: 0;
-        font-size: 1.15rem;
-      }
-
-      .secondary-btn {
-        background: #f8fafc;
-        color: #1e1b4b;
-        border: 1.5px solid #c7d2fe;
-        padding-inline: 1.1rem;
-      }
-
-      .size-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 0.8rem;
-      }
-
-      .size-card {
-        border-radius: 18px;
-        padding: 0.8rem 1rem;
-        border: 1.5px solid #e0e7ff;
-        background: #f8fafc;
-      }
-
-      .size-card strong {
-        display: block;
-        font-size: 1.1rem;
-      }
-
-      .size-card span {
-        font-size: 0.9rem;
-        color: #475569;
-      }
-
-      .size-card[data-status="available"] {
-        background: #ecfdf5;
-        border-color: #a7f3d0;
-        color: #065f46;
-      }
-
-      .size-card[data-status="oos"] {
-        background: #fef2f2;
-        border-color: #fecaca;
-        color: #b91c1c;
-      }
-
-      .size-empty {
-        padding: 1rem;
-        border-radius: 16px;
-        background: #f1f5f9;
-        color: #475569;
-        font-weight: 600;
-        text-align: center;
-      }
-
       footer {
         margin-top: 2.5rem;
         text-align: center;
         color: #94a3b8;
         font-size: 0.9rem;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes fadeInMain {
+        from { opacity: 0; transform: scale(0.98) translateY(10px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      @keyframes ambientFloat {
+        0% { transform: translate3d(-2%, -1%, 0) rotate(-1deg); }
+        100% { transform: translate3d(2%, 1%, 0) rotate(1deg); }
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); height: 0; padding-block: 0; margin-bottom: 0; }
+        to { opacity: 1; transform: translateY(0); height: auto; } /* height auto ko animate mượt bằng JS nhưng đủ dùng cho visual */
+      }
+
+      @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      @keyframes skeletonMove {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
+      }
+
+      @keyframes progressIndeterminate {
+        0% { transform: translateX(-120%); }
+        100% { transform: translateX(260%); }
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* Staggered Animation cho kết quả: Các thẻ hiện lần lượt */
+      .result-card:not([hidden]) .location-panel {
+        animation: fadeInUp 0.6s var(--ease-out-expo) 0s backwards;
+      }
+      .result-card:not([hidden]) .product-card {
+        animation: fadeInUp 0.6s var(--ease-out-expo) 0.1s backwards;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
       }
 
       @media (max-width: 768px) {
@@ -447,12 +548,11 @@
         }
 
         .location-panel-header {
-          flex-direction: column;
-          gap: 0.5rem;
-          align-items: stretch;
+          gap: 0.75rem;
         }
         .ghost-btn {
-          width: 100%;
+          padding-inline: 1rem;
+          font-size: 0.9rem;
         }
 
         .location-actions {
@@ -468,15 +568,6 @@
           grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
         }
 
-        .sizes-panel {
-          padding: 1.2rem;
-          border-radius: 20px;
-        }
-
-        .size-card {
-          padding: 0.7rem 0.85rem;
-        }
-
         footer {
           font-size: 0.8rem;
         }
@@ -484,12 +575,18 @@
 
       @media (max-width: 520px) {
         .lookup-form {
-          flex-direction: column;
-          align-items: stretch;
+          gap: 0.5rem;
         }
 
         button[type="submit"] {
-          width: 100%;
+          width: auto;
+          padding-inline: 1.25rem;
+          font-size: 0.95rem;
+        }
+
+        input[type="text"] {
+          padding: 0.85rem 1rem;
+          font-size: 0.95rem;
         }
       }
     </style>
@@ -515,12 +612,19 @@
       </form>
 
       <div class="status-bar" id="status-bar" data-variant="idle" hidden></div>
+      <div class="top-progress" id="top-progress" hidden aria-hidden="true">
+        <span class="bar"></span>
+      </div>
 
       <section id="result-section" class="result-card" hidden>
         <article class="location-panel" id="location-panel" hidden>
           <div class="location-panel-header">
             <div>
               <p class="location-label">Vị trí sản phẩm</p>
+              <div class="location-skeleton" id="location-skeleton" hidden>
+                <div class="skeleton-block thin w-40"></div>
+                <div class="skeleton-block w-70"></div>
+              </div>
               <p id="product-location" class="location-text">
                 Đang tải thông tin vị trí...
               </p>
@@ -551,21 +655,6 @@
             <div class="placeholder">NO IMAGE</div>
           </div>
         </article>
-
-        <article class="sizes-panel" id="sizes-panel" hidden>
-          <div class="sizes-header">
-            <h3>Tình trạng size</h3>
-            <button
-              type="button"
-              class="secondary-btn"
-              id="toggle-sizes"
-              hidden
-            >
-              Hiện tất cả size
-            </button>
-          </div>
-          <div id="size-grid" class="size-grid"></div>
-        </article>
       </section>
 
       <footer>&copy; <span id="year-label"></span> Kho vận hành.</footer>
@@ -583,13 +672,13 @@
       const input = document.getElementById("sku-input");
       const button = document.getElementById("lookup-button");
       const statusBar = document.getElementById("status-bar");
+      const topProgress = document.getElementById("top-progress");
       const resultSection = document.getElementById("result-section");
       const locationPanel = document.getElementById("location-panel");
+      const locationSkeleton = document.getElementById("location-skeleton");
       const productLocationEl = document.getElementById("product-location");
       const productVisualEl = document.getElementById("product-visual");
-      const sizePanel = document.getElementById("sizes-panel");
-      const sizeGrid = document.getElementById("size-grid");
-      const toggleSizesBtn = document.getElementById("toggle-sizes");
+      const productCard = document.querySelector(".product-card");
       const editLocationBtn = document.getElementById("edit-location");
       const locationEditor = document.getElementById("location-editor");
       const locationInput = document.getElementById("location-input");
@@ -597,14 +686,49 @@
       const cancelLocationBtn = document.getElementById("cancel-location");
       const yearLabel = document.getElementById("year-label");
 
-      let cachedSizes = [];
-      let showAllSizes = false;
       let currentSku = "";
       let currentLocation = "";
       let locationSaving = false;
       let statusHideTimer = null;
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
       yearLabel.textContent = new Date().getFullYear();
+
+      function animateReveal(element, delayMs = 0) {
+        if (!element || prefersReducedMotion) return;
+        try {
+          element.animate(
+            [
+              { opacity: 0, transform: "translateY(12px) scale(0.985)" },
+              { opacity: 1, transform: "translateY(0) scale(1)" },
+            ],
+            {
+              duration: 520,
+              easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+              fill: "both",
+              delay: delayMs,
+            }
+          );
+        } catch {
+          // no-op (older browsers)
+        }
+      }
+
+      function setSkeletonState(isSkeleton) {
+        locationSkeleton.hidden = !isSkeleton;
+        productLocationEl.hidden = isSkeleton;
+        locationPanel.hidden = false;
+        resultSection.hidden = false;
+        editLocationBtn.hidden = true;
+        locationEditor.hidden = true;
+
+        if (isSkeleton) {
+          productCard.hidden = false;
+          productVisualEl.innerHTML = '<div class="placeholder">LOADING</div>';
+        }
+      }
 
       form.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -639,17 +763,15 @@
         input.value = "";
         clearCurrentProduct();
 
-        showAllSizes = false;
-        cachedSizes = [];
-        toggleSizesBtn.hidden = true;
-        sizePanel.hidden = true;
-        resultSection.hidden = true;
+        setSkeletonState(true);
         setLoadingState(true);
-        updateStatus("Đang truy vấn dữ liệu sản phẩm...", "loading");
+        statusBar.hidden = true;
 
         try {
           const product = await fetchProduct(sku);
           if (!product) {
+            setSkeletonState(false);
+            resultSection.hidden = true;
             updateStatus("Không tìm thấy dữ liệu cho mã " + sku, "empty");
             return;
           }
@@ -657,6 +779,8 @@
           updateStatus("", "idle");
         } catch (error) {
           console.error(error);
+          setSkeletonState(false);
+          resultSection.hidden = true;
           const message =
             error.name === "AbortError"
               ? "Quá thời gian chờ. Vui lòng thử lại."
@@ -707,7 +831,7 @@
         if (!blocks.length) return null;
 
         const info =
-          blocks.find((item) => "price" in item || "sizes" in item) ??
+          blocks.find((item) => "price" in item || "imageUrl" in item) ??
           blocks[0];
         const locationEntry =
           blocks.find((item) => "Location" in item || "location" in item) ??
@@ -715,9 +839,7 @@
 
         return {
           found: info?.found ?? true,
-          price: Number(info?.price) || null,
           imageUrl: info?.imageUrl || "",
-          sizes: Array.isArray(info?.sizes) ? info.sizes : [],
           location: locationEntry.Location || locationEntry.location || "",
         };
       }
@@ -739,6 +861,11 @@
       }
 
       function renderProduct(sku, product) {
+        setSkeletonState(false);
+
+        // Xóa nội dung cũ để animation mượt hơn
+        productVisualEl.innerHTML = "";
+
         resultSection.hidden = false;
         locationPanel.hidden = false;
 
@@ -750,76 +877,32 @@
         cancelLocationEdit();
 
         renderImage(product.imageUrl);
-        cachedSizes = Array.isArray(product.sizes) ? product.sizes : [];
-        renderSizes();
+
+        animateReveal(locationPanel, 0);
+        animateReveal(productCard, 90);
       }
 
       function renderImage(url) {
         productVisualEl.innerHTML = "";
         if (url) {
+          productCard.hidden = false;
           const img = document.createElement("img");
           img.src = url;
           img.alt = "Ảnh sản phẩm";
           img.loading = "lazy";
           img.addEventListener("error", () => {
-            productVisualEl.innerHTML =
-              '<div class="placeholder">NO IMAGE</div>';
+            productCard.hidden = true;
           });
           productVisualEl.appendChild(img);
         } else {
-          productVisualEl.innerHTML =
-            '<div class="placeholder">NO IMAGE</div>';
+          productCard.hidden = true;
         }
       }
-
-      function renderSizes() {
-        const hasSizes = cachedSizes.length > 0;
-        sizePanel.hidden = !hasSizes;
-
-        if (!hasSizes) {
-          sizeGrid.innerHTML = "";
-          return;
-        }
-
-        const filtered = showAllSizes
-          ? cachedSizes
-          : cachedSizes.filter((size) => Number(size.stock) <= 0);
-
-        if (!filtered.length) {
-          sizeGrid.innerHTML =
-            '<div class="size-empty">Tất cả size đang còn hàng. (Đang ẩn size tồn &gt; 0)</div>';
-        } else {
-          sizeGrid.innerHTML = filtered
-            .map((item) => {
-              const stock = Number(item.stock) || 0;
-              const status = stock > 0 ? "available" : "oos";
-              return `
-                <div class="size-card" data-status="${status}">
-                  <strong>${item.size || "SIZE"}</strong>
-                  <span>${stock > 0 ? `${stock} chiếc` : "Hết hàng"}</span>
-                </div>
-              `;
-            })
-            .join("");
-        }
-
-        const hasAvailable = cachedSizes.some(
-          (item) => Number(item.stock) > 0
-        );
-        toggleSizesBtn.hidden = !hasAvailable;
-        toggleSizesBtn.textContent = showAllSizes
-          ? "Ẩn size còn hàng"
-          : "Hiện tất cả size";
-      }
-
-      toggleSizesBtn.addEventListener("click", () => {
-        showAllSizes = !showAllSizes;
-        renderSizes();
-      });
 
       function updateStatus(message, variant = "idle", autoHideMs = 0) {
         clearTimeout(statusHideTimer);
-        if (!message) {
+        const normalizedMessage = (message ?? "").trim();
+        if (!normalizedMessage) {
           statusBar.hidden = true;
           statusBar.dataset.variant = "idle";
           statusBar.textContent = "";
@@ -827,7 +910,7 @@
         }
         statusBar.hidden = false;
         statusBar.dataset.variant = variant;
-        statusBar.textContent = message;
+        statusBar.textContent = normalizedMessage;
         if (autoHideMs > 0) {
           statusHideTimer = window.setTimeout(() => {
             updateStatus("", "idle");
@@ -844,6 +927,7 @@
       function clearCurrentProduct() {
         currentSku = "";
         currentLocation = "";
+        locationSkeleton.hidden = true;
         locationPanel.hidden = true;
         editLocationBtn.hidden = true;
         locationEditor.hidden = true;
@@ -938,10 +1022,15 @@
       function setLoadingState(isLoading) {
         button.disabled = isLoading;
         input.disabled = isLoading;
-        if (!isLoading) {
+        topProgress.hidden = !isLoading;
+        if (isLoading) {
+          button.classList.add("loading");
+        } else {
+          button.classList.remove("loading");
           input.focus();
         }
       }
     </script>
   </body>
 </html>
+
