@@ -68,9 +68,9 @@
       .topbar {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         margin-bottom: 1.25rem;
-        text-align: center;
+        text-align: left;
       }
 
       .brand {
@@ -78,6 +78,11 @@
         letter-spacing: -0.02em;
         font-size: 1.05rem;
         color: #111;
+      }
+
+      body.is-welcome .topbar {
+        justify-content: center;
+        text-align: center;
       }
 
       .lookup-form {
