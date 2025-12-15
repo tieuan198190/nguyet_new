@@ -693,6 +693,7 @@
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
+      const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
       yearLabel.textContent = new Date().getFullYear();
 
@@ -766,6 +767,7 @@
           return;
         }
 
+        input.blur(); // tránh iOS tự scroll khi giữ focus
         input.value = "";
         clearCurrentProduct();
         setWelcomeState(false);
@@ -1035,9 +1037,12 @@
         topProgress.hidden = !isLoading;
         if (isLoading) {
           button.classList.add("loading");
+          input.blur();
         } else {
           button.classList.remove("loading");
-          input.focus();
+          if (!isCoarsePointer && document.body.classList.contains("is-welcome")) {
+            input.focus();
+          }
         }
       }
     </script>
