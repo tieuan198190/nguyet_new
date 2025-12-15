@@ -518,6 +518,34 @@
         }
       }
 
+      /* --- View Transitions (Chromium) --- */
+      @supports (view-transition-name: none) {
+        main {
+          view-transition-name: main;
+        }
+        ::view-transition-old(main),
+        ::view-transition-new(main) {
+          animation-duration: 260ms;
+          animation-timing-function: var(--ease-out-expo);
+        }
+        ::view-transition-old(main) {
+          animation-name: vtFadeOut;
+        }
+        ::view-transition-new(main) {
+          animation-name: vtFadeIn;
+        }
+      }
+
+      @keyframes vtFadeOut {
+        from { opacity: 1; transform: translateY(0) scale(1); }
+        to { opacity: 0; transform: translateY(-8px) scale(0.99); }
+      }
+
+      @keyframes vtFadeIn {
+        from { opacity: 0; transform: translateY(10px) scale(0.99); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
       @media (max-width: 768px) {
         body {
           padding: 1rem;
@@ -698,7 +726,23 @@
       yearLabel.textContent = new Date().getFullYear();
 
       function setWelcomeState(isWelcome) {
-        document.body.classList.toggle("is-welcome", isWelcome);
+        const apply = () => document.body.classList.toggle("is-welcome", isWelcome);
+        if (!prefersReducedMotion && "startViewTransition" in document) {
+          try {
+            document.startViewTransition(apply);
+            return;
+          } catch {
+            // fall through
+          }
+        }
+        apply();
+      }
+
+      function animateStagger(elements, baseDelayMs = 0, stepMs = 80) {
+        if (prefersReducedMotion) return;
+        elements
+          .filter(Boolean)
+          .forEach((element, index) => animateReveal(element, baseDelayMs + stepMs * index));
       }
 
       function animateReveal(element, delayMs = 0) {
@@ -732,6 +776,7 @@
         if (isSkeleton) {
           productCard.hidden = false;
           productVisualEl.innerHTML = '<div class="placeholder">LOADING</div>';
+          animateStagger([locationPanel, productCard], 0, 90);
         }
       }
 
@@ -890,8 +935,16 @@
 
         renderImage(product.imageUrl);
 
-        animateReveal(locationPanel, 0);
-        animateReveal(productCard, 90);
+        animateStagger([locationPanel, productCard], 0, 90);
+        animateStagger(
+          [
+            locationPanel.querySelector(".location-label"),
+            productLocationEl,
+            editLocationBtn,
+          ],
+          70,
+          70
+        );
       }
 
       function renderImage(url) {
