@@ -554,13 +554,18 @@
       /* When editor is visible, make the panel a centered modal */
       .location-panel:has(.location-editor:not([hidden])) {
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        /* Robust Center */
+        inset: 0;
+        margin: auto;
         width: 85%;
         max-width: 350px;
-        height: auto;
+        height: fit-content;
+        max-height: 80vh;
+        transform: none;
+        /* Clear transform */
+
         background: #fff;
+        backdrop-filter: none;
         border-radius: 24px;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         padding: 2rem;
@@ -568,6 +573,7 @@
         z-index: 1000;
         align-items: center;
         /* Center content in modal */
+        justify-content: center;
       }
 
       /* Hide the header small display when editing in modal */
@@ -580,7 +586,7 @@
         content: "";
         position: fixed;
         inset: -100vmax;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.5);
         z-index: -1;
       }
     }
